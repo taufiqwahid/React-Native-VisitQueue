@@ -6,6 +6,7 @@ import {
   Text,
   View,
 } from 'react-native';
+import {showMessage} from 'react-native-flash-message';
 import {Modalize} from 'react-native-modalize';
 import Button from '../../component/Button';
 import Header from '../../component/Header';
@@ -17,23 +18,40 @@ import {stylesTexts} from '../../utils/stylesTexts';
 const Home = ({navigation, route}) => {
   const modalizeRef = useRef(null);
   const [loading, setLoading] = useState(true);
+  const [sedangMenuju, setSedangMenuju] = useState(false);
 
-  console.log('alsdasdasdas', route);
+  const handleSedangMenuju = () => {
+    setSedangMenuju(!sedangMenuju);
+  };
+
   useEffect(() => {
-    console.log('asdasd');
-
     const unsubscribe = navigation.addListener('focus', () => {
       setLoading(false);
-      if (route.name === 'Profile') {
+      if (route?.params?.ScreenLogin) {
         modalizeRef.current?.open();
       }
     });
 
     return unsubscribe;
-  }, [route, navigation]);
+  }, [route?.params?.ScreenLogin, navigation, route?.name]);
 
   const Login = () => {
-    alert('LOGINNN');
+    showMessage({
+      statusBarHeight: 20,
+      message: 'LOGIN BERHASIL',
+      description: 'Selamat Datang Admin',
+      type: 'success',
+      icon: 'success',
+      backgroundColor: stylesColors.default,
+      color: stylesColors.white,
+      style: {
+        borderBottomEndRadius: 20,
+        borderBottomStartRadius: 20,
+      },
+    });
+    setTimeout(() => {
+      navigation.replace('Dashboard');
+    }, 500);
   };
 
   return (
@@ -45,7 +63,11 @@ const Home = ({navigation, route}) => {
         </View>
       ) : (
         <View style={{margin: 20}}>
-          <Monitoring />
+          <Monitoring
+            disabled={route?.params?.ScreenLogin}
+            sedangMenuju={sedangMenuju}
+            handleSedangMenuju={handleSedangMenuju}
+          />
         </View>
       )}
 
@@ -55,17 +77,21 @@ const Home = ({navigation, route}) => {
         ref={modalizeRef}
         adjustToContentHeight={true}
         modalStyle={{padding: 20}}
-        avoidKeyboardLikeIOS={true}
         HeaderComponent={() => (
-          <View>
-            <Text style={{...stylesTexts.extraLarge, textAlign: 'center'}}>
+          <View style={{marginBottom: 10}}>
+            <Text
+              style={{
+                ...stylesTexts.extraLarge,
+                color: stylesColors.default2,
+                textAlign: 'center',
+              }}>
               LOGIN ADMIN
             </Text>
           </View>
         )}>
         <View>
           <InputComp title="Username" />
-          <InputComp title="Password" />
+          <InputComp title="Password" password={false} />
           <View style={{marginVertical: 20}}>
             <Button color={stylesColors.default} text="Masuk" onPress={Login} />
           </View>

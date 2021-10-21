@@ -8,11 +8,11 @@ import {
   HomeActive,
   HomeInactive,
 } from '../assets/image';
+import Dashboard from '../pages/Admin/Dashboard';
 import Home from '../pages/Home';
 import IntroScreen from '../pages/Intro';
 import Splash from '../pages/Splash';
 import {stylesColors} from '../utils/stylesColors';
-import {stylesTexts} from '../utils/stylesTexts';
 
 const Router = () => {
   const [showSplash, setShowSplash] = useState(true);
@@ -24,10 +24,15 @@ const Router = () => {
   const StackHome = () => {
     return (
       <Stack.Navigator
+        initialRouteName="Monitoring"
         screenOptions={{
           headerShown: false,
         }}>
-        <Stack.Screen name="Monitoring" component={Home} />
+        <Stack.Screen
+          name="Monitoring"
+          component={Home}
+          initialParams={{ScreenLogin: false}}
+        />
       </Stack.Navigator>
     );
   };
@@ -38,7 +43,12 @@ const Router = () => {
         screenOptions={{
           headerShown: false,
         }}>
-        <Stack.Screen name="Profile" component={Home} />
+        <Stack.Screen
+          name="Login"
+          component={Home}
+          initialParams={{ScreenLogin: true}}
+        />
+        <Stack.Screen name="Dashboard" component={Dashboard} />
       </Stack.Navigator>
     );
   };
