@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {Image, SafeAreaView, StyleSheet, Text, View} from 'react-native';
-import {ImageIntro1} from '../../assets/image';
+import {ImageIntro1, ImageSplash} from '../../assets/image';
 import {getData} from '../../config/LocalStorage';
+import {stylesTexts} from '../../utils/stylesTexts';
 
 const Splash = ({navigation}) => {
   useEffect(() => {
@@ -33,24 +34,17 @@ const Splash = ({navigation}) => {
           paddingHorizontal: 80,
         }}>
         <Image
-          source={ImageIntro1}
-          width={100}
-          height={100}
-          style={{height: 100, width: 100}}
+          source={ImageSplash}
+          resizeMode="contain"
+          style={{height: 250, width: 250}}
         />
         <Text
-          style={{textAlign: 'center', fontFamily: 'Poppins', color: 'red'}}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur,
-          ipsum.
-        </Text>
-        <Text
           style={{
+            ...stylesTexts.extraLarge,
             textAlign: 'center',
-            fontFamily: 'Poppins-SemiBold',
-            color: 'red',
+            marginTop: -50,
           }}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur,
-          ipsum.
+          VisitQue
         </Text>
       </View>
     </SafeAreaView>

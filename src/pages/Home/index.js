@@ -4,25 +4,56 @@ import {
   SafeAreaView,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
 } from 'react-native';
+import {showMessage} from 'react-native-flash-message';
 import {Modalize} from 'react-native-modalize';
+import Button from '../../component/Button';
 import Header from '../../component/Header';
+import InputComp from '../../component/InputComp';
 import Monitoring from '../../component/Monitoring';
 import {stylesColors} from '../../utils/stylesColors';
+import {stylesTexts} from '../../utils/stylesTexts';
 
-const Home = () => {
+const Home = ({navigation, route}) => {
   const modalizeRef = useRef(null);
-
   const [loading, setLoading] = useState(true);
-  const onOpen = () => {
-    modalizeRef.current?.open();
+  const [sedangMenuju, setSedangMenuju] = useState(false);
+
+  const handleSedangMenuju = () => {
+    setSedangMenuju(!sedangMenuju);
   };
 
   useEffect(() => {
-    setLoading(false);
-  }, []);
+    const unsubscribe = navigation.addListener('focus', () => {
+      setLoading(false);
+      if (route?.params?.ScreenLogin) {
+        modalizeRef.current?.open();
+      }
+    });
+
+    return unsubscribe;
+  }, [route?.params?.ScreenLogin, navigation, route?.name]);
+
+  const Login = () => {
+    showMessage({
+      statusBarHeight: 20,
+      message: 'LOGIN BERHASIL',
+      description: 'Selamat Datang Admin',
+      type: 'success',
+      icon: 'success',
+      backgroundColor: stylesColors.default,
+      color: stylesColors.white,
+      style: {
+        borderBottomEndRadius: 20,
+        borderBottomStartRadius: 20,
+      },
+    });
+    setTimeout(() => {
+      navigation.replace('Dashboard');
+    }, 500);
+  };
+
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#F2F6FB'}}>
       <Header title="Monitoring Pengunjung" />
@@ -32,29 +63,38 @@ const Home = () => {
         </View>
       ) : (
         <View style={{margin: 20}}>
-          <Monitoring />
+          <Monitoring
+            disabled={route?.params?.ScreenLogin}
+            sedangMenuju={sedangMenuju}
+            handleSedangMenuju={handleSedangMenuju}
+          />
         </View>
       )}
-      <TouchableOpacity onPress={onOpen}>
-        <Text>Open the modal</Text>
-      </TouchableOpacity>
 
-      <Modalize ref={modalizeRef}>
+      <Modalize
+        onClosed={() => navigation.navigate('Home')}
+        onClose={() => navigation.navigate('Home')}
+        ref={modalizeRef}
+        adjustToContentHeight={true}
+        modalStyle={{padding: 20}}
+        HeaderComponent={() => (
+          <View style={{marginBottom: 10}}>
+            <Text
+              style={{
+                ...stylesTexts.extraLarge,
+                color: stylesColors.default2,
+                textAlign: 'center',
+              }}>
+              LOGIN ADMIN
+            </Text>
+          </View>
+        )}>
         <View>
-          <Text>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos
-            dolorum eveniet eaque amet libero fugit alias cum perspiciatis
-            quisquam temporibus ut ex, doloremque rerum impedit quis soluta
-            incidunt eius, quaerat nostrum voluptatum illo fuga aliquam!
-            Cupiditate officiis voluptas beatae illum distinctio alias earum
-            voluptate sit blanditiis, nisi iste culpa, pariatur iusto assumenda
-            consequatur sunt eos labore esse animi similique ipsa fugiat
-            recusandae adipisci! Aliquid nihil iste minus laboriosam accusamus
-            ipsam nisi, suscipit provident amet vero exercitationem nulla
-            voluptatibus. Numquam consequatur, veniam culpa repellat dolor
-            incidunt fugit perferendis. Distinctio tempore molestias, dolore
-            enim ducimus culpa quae mollitia aut alias, fugiat odio?
-          </Text>
+          <InputComp title="Username" />
+          <InputComp title="Password" password={false} />
+          <View style={{marginVertical: 20}}>
+            <Button color={stylesColors.default} text="Masuk" onPress={Login} />
+          </View>
         </View>
       </Modalize>
     </SafeAreaView>

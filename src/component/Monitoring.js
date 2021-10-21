@@ -6,7 +6,7 @@ import {stylesTexts} from '../utils/stylesTexts';
 import Button from './Button';
 import TextCount from './TextCount';
 
-const Monitoring = () => {
+const Monitoring = ({disabled, sedangMenuju, handleSedangMenuju}) => {
   return (
     <View
       style={{
@@ -40,10 +40,10 @@ const Monitoring = () => {
       </View>
       <View style={{height: 30}} />
       <Button
-        type={false}
-        text="Sedang menuju kesana ?"
-        color={stylesColors.green}
-        onPress={() => alert('sedangmenuju')}
+        type={disabled || sedangMenuju}
+        text={sedangMenuju ? 'Ada yang menuju kesana' : 'Sedang menuju kesana?'}
+        color={sedangMenuju ? stylesColors.default2 : stylesColors.green}
+        onPress={() => handleSedangMenuju()}
       />
     </View>
   );
