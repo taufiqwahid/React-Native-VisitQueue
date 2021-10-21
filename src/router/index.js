@@ -32,7 +32,7 @@ const Router = () => {
     );
   };
 
-  const StackProfile = () => {
+  const StackAdmin = () => {
     return (
       <Stack.Navigator
         screenOptions={{
@@ -78,7 +78,7 @@ const Router = () => {
         />
         <Tab.Screen
           name="Admin"
-          component={StackProfile}
+          component={StackAdmin}
           options={{
             tabBarLabelStyle: {
               fontFamily: 'Poppins-Medium',

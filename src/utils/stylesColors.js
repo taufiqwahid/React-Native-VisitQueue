@@ -6,4 +6,5 @@ export const stylesColors = {
   white: '#ffffff',
   green: '#23B65D',
   gray: '#BDBDBD ',
+  gray2: '#E9E9E9',
 };

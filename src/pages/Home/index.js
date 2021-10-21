@@ -4,25 +4,38 @@ import {
   SafeAreaView,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
 } from 'react-native';
 import {Modalize} from 'react-native-modalize';
+import Button from '../../component/Button';
 import Header from '../../component/Header';
+import InputComp from '../../component/InputComp';
 import Monitoring from '../../component/Monitoring';
 import {stylesColors} from '../../utils/stylesColors';
+import {stylesTexts} from '../../utils/stylesTexts';
 
-const Home = () => {
+const Home = ({navigation, route}) => {
   const modalizeRef = useRef(null);
-
   const [loading, setLoading] = useState(true);
-  const onOpen = () => {
-    modalizeRef.current?.open();
+
+  console.log('alsdasdasdas', route);
+  useEffect(() => {
+    console.log('asdasd');
+
+    const unsubscribe = navigation.addListener('focus', () => {
+      setLoading(false);
+      if (route.name === 'Profile') {
+        modalizeRef.current?.open();
+      }
+    });
+
+    return unsubscribe;
+  }, [route, navigation]);
+
+  const Login = () => {
+    alert('LOGINNN');
   };
 
-  useEffect(() => {
-    setLoading(false);
-  }, []);
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#F2F6FB'}}>
       <Header title="Monitoring Pengunjung" />
@@ -35,26 +48,27 @@ const Home = () => {
           <Monitoring />
         </View>
       )}
-      <TouchableOpacity onPress={onOpen}>
-        <Text>Open the modal</Text>
-      </TouchableOpacity>
 
-      <Modalize ref={modalizeRef}>
+      <Modalize
+        onClosed={() => navigation.navigate('Home')}
+        onClose={() => navigation.navigate('Home')}
+        ref={modalizeRef}
+        adjustToContentHeight={true}
+        modalStyle={{padding: 20}}
+        avoidKeyboardLikeIOS={true}
+        HeaderComponent={() => (
+          <View>
+            <Text style={{...stylesTexts.extraLarge, textAlign: 'center'}}>
+              LOGIN ADMIN
+            </Text>
+          </View>
+        )}>
         <View>
-          <Text>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos
-            dolorum eveniet eaque amet libero fugit alias cum perspiciatis
-            quisquam temporibus ut ex, doloremque rerum impedit quis soluta
-            incidunt eius, quaerat nostrum voluptatum illo fuga aliquam!
-            Cupiditate officiis voluptas beatae illum distinctio alias earum
-            voluptate sit blanditiis, nisi iste culpa, pariatur iusto assumenda
-            consequatur sunt eos labore esse animi similique ipsa fugiat
-            recusandae adipisci! Aliquid nihil iste minus laboriosam accusamus
-            ipsam nisi, suscipit provident amet vero exercitationem nulla
-            voluptatibus. Numquam consequatur, veniam culpa repellat dolor
-            incidunt fugit perferendis. Distinctio tempore molestias, dolore
-            enim ducimus culpa quae mollitia aut alias, fugiat odio?
-          </Text>
+          <InputComp title="Username" />
+          <InputComp title="Password" />
+          <View style={{marginVertical: 20}}>
+            <Button color={stylesColors.default} text="Masuk" onPress={Login} />
+          </View>
         </View>
       </Modalize>
     </SafeAreaView>
