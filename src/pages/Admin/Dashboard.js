@@ -1,3 +1,5 @@
+import {getDatabase, onValue, ref, set} from '@firebase/database';
+import {getAuth, signOut} from 'firebase/auth';
 import React, {useEffect, useState} from 'react';
 import {
   ActivityIndicator,
@@ -6,6 +8,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import {showMessage} from 'react-native-flash-message';
@@ -13,38 +16,152 @@ import {ScrollView} from 'react-native-gesture-handler';
 import Button from '../../component/Button';
 import CardQueue from '../../component/CardQueue';
 import Header from '../../component/Header';
+import {storeData} from '../../config/LocalStorage';
 import {stylesColors} from '../../utils/stylesColors';
 import {stylesTexts} from '../../utils/stylesTexts';
 
 const Dashboard = ({navigation}) => {
   const [loading, setLoading] = useState(true);
-  const [updateBatasan, setUpdateBatasan] = useState(40);
+  const [loadingUpdate, setLoadingUpdate] = useState(false);
+  const [updateBatasan, setUpdateBatasan] = useState(3);
+  const [updateBatasanBaru, setUpdateBatasanBaru] = useState(5);
+  const [jmlPengunjung, setJmlPengunjung] = useState(0);
+  const [jmlAntrian, setJmlAntrian] = useState(0);
+  const [jmlBatasPengunjung, setJmlBatasPengunjung] = useState(0);
+  const db = getDatabase();
+  const auth = getAuth();
+
   useEffect(() => {
-    setLoading(false);
+    const getAll = ref(db, '/');
+
+    const unsubscribe = onValue(getAll, snapshot => {
+      setLoading(false);
+      const data = snapshot.val();
+      setJmlAntrian(
+        data?.antrian?.antrianMasuk?.total -
+          data?.antrian?.antrianKeluar?.total <
+          0
+          ? 0
+          : data?.antrian?.antrianMasuk?.total -
+              data?.antrian?.antrianKeluar?.total,
+      );
+      setJmlPengunjung(
+        data?.pengunjung?.pengunjungMasuk?.total -
+          data?.pengunjung?.pengunjungKeluar?.total <
+          0
+          ? 0
+          : data?.pengunjung?.pengunjungMasuk?.total -
+              data?.pengunjung?.pengunjungKeluar?.total,
+      );
+      setJmlBatasPengunjung(data?.pengunjung?.batas);
+      setUpdateBatasan(data?.pengunjung?.batas);
+    });
+    return unsubscribe;
   }, []);
 
-  const update = () => {
-    showMessage({
-      statusBarHeight: 20,
-      message: 'UPDATE BERHASIL',
-      description: 'Jumlah batas pengunjung diubah',
-      type: 'success',
-      icon: 'success',
-      backgroundColor: stylesColors.default,
-      color: stylesColors.white,
-      style: {
-        borderBottomEndRadius: 20,
-        borderBottomStartRadius: 20,
-      },
-    });
-    setTimeout(() => {
-      navigation.goBack();
-    }, 500);
+  const handleLogout = () => {
+    signOut(auth)
+      .then(() => {
+        showMessage({
+          duration: 2000,
+          animationDuration: 2000,
+          message: 'Logout Berhasil',
+          description: 'Jumlah batas pengunjung diubah',
+          type: 'success',
+          icon: 'success',
+          backgroundColor: stylesColors.default,
+          color: stylesColors.white,
+          style: {
+            borderBottomEndRadius: 20,
+            borderBottomStartRadius: 20,
+          },
+        });
+        storeData('@statusLogin', false);
+        navigation?.replace('Start');
+      })
+      .catch(error => {
+        console.log('errlogout', error);
+        showMessage({
+          duration: 2000,
+          animationDuration: 2000,
+          message: 'Logout Gagal',
+          description: 'Anda tidak dapat Logout ',
+          type: 'info',
+          icon: 'info',
+          backgroundColor: stylesColors.default2,
+          color: stylesColors.white,
+          style: {
+            borderBottomEndRadius: 20,
+            borderBottomStartRadius: 20,
+          },
+        });
+      });
+  };
+
+  const handleUpdate = () => {
+    console.log(updateBatasanBaru < jmlBatasPengunjung);
+    if (updateBatasanBaru < jmlPengunjung) {
+      showMessage({
+        duration: 2000,
+        animationDuration: 2000,
+        message: 'Update Gagal',
+        description:
+          'Jumlah batas terbaru tidak dapat lebih kecil dari jumlah pengunjung yang ada',
+        type: 'info',
+        icon: 'info',
+        backgroundColor: stylesColors.default2,
+        color: stylesColors.white,
+        style: {
+          borderBottomEndRadius: 20,
+          borderBottomStartRadius: 20,
+        },
+      });
+    } else {
+      setLoadingUpdate(true);
+      set(ref(db, 'pengunjung/batas'), parseInt(updateBatasanBaru))
+        .then(() => {
+          setLoadingUpdate(false);
+          showMessage({
+            duration: 2000,
+            animationDuration: 2000,
+            message: 'Update Berhasil',
+            description: 'Jumlah batas pengunjung diubah',
+            type: 'success',
+            icon: 'success',
+            backgroundColor: stylesColors.default,
+            color: stylesColors.white,
+            style: {
+              borderBottomEndRadius: 20,
+              borderBottomStartRadius: 20,
+            },
+          });
+          // navigation?.goBack();
+        })
+        .catch(error => {
+          // The write failed...
+          console.log('error', error);
+          setLoadingUpdate(false);
+          showMessage({
+            duration: 2000,
+            animationDuration: 2000,
+            message: 'Update Gagal',
+            description: 'Tidak dapat melakukan perubahan',
+            type: 'info',
+            icon: 'info',
+            backgroundColor: stylesColors.default2,
+            color: stylesColors.white,
+            style: {
+              borderBottomEndRadius: 20,
+              borderBottomStartRadius: 20,
+            },
+          });
+        });
+    }
   };
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#F2F6FB'}}>
-      <ScrollView>
+      <ScrollView showsHorizontalScrollIndicator={false} style={{flex: 1}}>
         <Header title="Kontrol Jumlah Pengunjung" />
         {loading ? (
           <View
@@ -59,12 +176,21 @@ const Dashboard = ({navigation}) => {
                 justifyContent: 'space-between',
                 marginBottom: 20,
               }}>
-              <CardQueue count={40} text1="Jumlah" text2="Pengunjung" />
-              <CardQueue count={40} text1="Jumlah" text2="Pengunjung" />
+              <CardQueue
+                count={jmlPengunjung}
+                text1="Jumlah"
+                text2="Pengunjung"
+              />
+              <View style={{width: 20}} />
+              <CardQueue count={jmlAntrian} text1="Jumlah" text2="Antrian" />
             </View>
 
             <View style={{marginBottom: 20}}>
-              <CardQueue count={40} text1="Jumlah" text2="Pengunjung" />
+              <CardQueue
+                count={jmlBatasPengunjung}
+                text1="Jumlah Batas"
+                text2="Antrian"
+              />
             </View>
 
             <View style={{marginVertical: 20}}>
@@ -78,10 +204,14 @@ const Dashboard = ({navigation}) => {
               </Text>
               <KeyboardAvoidingView style={{flex: 1}}>
                 <TextInput
-                  onChangeText={text => setUpdateBatasan(text)}
+                  onChangeText={text =>
+                    text == ''
+                      ? setUpdateBatasanBaru(0)
+                      : setUpdateBatasanBaru(text.replace(/[^A-Z0-9]/gi, ''))
+                  }
                   maxLength={2}
                   keyboardType="number-pad"
-                  value={updateBatasan.toString()}
+                  defaultValue={updateBatasan.toString()}
                   style={{
                     ...stylesTexts.largeBold,
                     borderBottomColor: stylesColors.default2,
@@ -95,13 +225,31 @@ const Dashboard = ({navigation}) => {
                 />
               </KeyboardAvoidingView>
             </View>
-            <View style={{marginVertical: 20}}>
+            <View style={{marginVertical: 0}}>
               <Button
+                loading={loadingUpdate}
                 color={stylesColors.default}
                 text="Update"
-                onPress={update}
+                onPress={handleUpdate}
               />
             </View>
+
+            <TouchableOpacity
+              onPress={handleLogout}
+              style={{
+                alignSelf: 'center',
+                justifyContent: 'center',
+                marginTop: 20,
+              }}>
+              <Text
+                style={{
+                  ...stylesTexts.mediumBold,
+                  color: stylesColors.default2,
+                  textAlign: 'center',
+                }}>
+                Logout
+              </Text>
+            </TouchableOpacity>
           </View>
         )}
       </ScrollView>

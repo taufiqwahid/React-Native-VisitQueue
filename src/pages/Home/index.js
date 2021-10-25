@@ -27,12 +27,13 @@ const Home = ({navigation, route}) => {
   const [loadingLogin, setLoadingLogin] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [encrypPass, setencrypPass] = useState(false);
   const db = getDatabase();
   const auth = getAuth();
 
   useEffect(() => {
     const getAll = ref(db, '/');
-    onValue(getAll, snapshot => {
+    const unsubscribe = onValue(getAll, snapshot => {
       setLoading(false);
       const data = snapshot.val();
       console.log('Data', data);
@@ -41,9 +42,10 @@ const Home = ({navigation, route}) => {
       let batasPengunjungMasuk = data?.pengunjung?.pengunjungMasuk?.total + 1;
       setbtnDisable(
         data?.pengunjung?.sedangMenuju &&
-          batasPengunjungMasuk < data?.pengunjung?.batas,
+          batasPengunjungMasuk >= data?.pengunjung?.batas,
       );
     });
+    return unsubscribe;
   }, []);
 
   useEffect(() => {
@@ -61,12 +63,12 @@ const Home = ({navigation, route}) => {
   ]);
 
   const handleNavigationLogin = () => {
-    console.log('route', route, navigation);
-    if (route?.params?.ScreenLogin && route?.params?.statusLogin !== true) {
-      modalizeRef.current?.open();
+    console.log(route?.params);
+    if (route?.params?.statusLogin) {
+      navigation?.replace('Dashboard');
     } else {
-      if (route?.name == 'Monitoring') {
-        navigation?.replace('Dashboard');
+      if (route?.params?.ScreenLogin) {
+        modalizeRef.current?.open();
       }
     }
   };
@@ -74,14 +76,14 @@ const Home = ({navigation, route}) => {
   const handleLogin = () => {
     if (email == '' || password == '') {
       showMessage({
-        duration: 100,
-        animationDuration: 100,
-        statusBarHeight: 20,
+        duration: 2000,
+        animationDuration: 2000,
+
         message: 'Form Login',
         description: 'Pastikan Email dan Password lengkap',
-        type: 'error',
-        icon: 'error',
-        backgroundColor: stylesColors.default2,
+        type: 'danger',
+        icon: 'danger',
+        backgroundColor: stylesColors.danger2,
         color: stylesColors.white,
         style: {
           borderBottomEndRadius: 20,
@@ -99,14 +101,14 @@ const Home = ({navigation, route}) => {
           storeData('@statusLogin', true);
 
           showMessage({
-            duration: 100,
-            animationDuration: 100,
-            statusBarHeight: 20,
+            duration: 2000,
+            animationDuration: 2000,
+
             message: 'LOGIN BERHASIL',
             description: 'Selamat Datang Admin',
             type: 'success',
             icon: 'success',
-            backgroundColor: stylesColors.default,
+            backgroundColor: stylesColors.dangert,
             color: stylesColors.white,
             style: {
               borderBottomEndRadius: 20,
@@ -122,13 +124,13 @@ const Home = ({navigation, route}) => {
           const errorMessage = error.message;
           console.log('ERRR', errorCode, errorMessage);
           showMessage({
-            duration: 100,
-            animationDuration: 100,
-            statusBarHeight: 20,
+            duration: 2000,
+            animationDuration: 2000,
+
             message: 'LOGIN TIDAK BERHASIL',
             description: 'Hanya Admin yang dapat login',
-            type: 'error',
-            icon: 'error',
+            type: 'danger',
+            icon: 'danger',
             backgroundColor: stylesColors.default2,
             color: stylesColors.white,
             style: {
@@ -192,18 +194,27 @@ const Home = ({navigation, route}) => {
           </View>
         )}>
         <View>
-          <InputComp title="Email" onChangeText={setEmail} />
           <InputComp
+            onfocus={() => setencrypPass(true)}
+            onBlur={() => setencrypPass(false)}
+            title="Email"
+            onChangeText={setEmail}
+            onBlur={() => setencrypPass(false)}
+          />
+          <InputComp
+            onfocus={() => setencrypPass(false)}
+            onBlur={() => setencrypPass(true)}
             title="Password"
             onChangeText={setPassword}
-            password={true}
+            password={encrypPass}
+            onSubmitEditing={handleLogin}
           />
           <View style={{marginVertical: 20}}>
             <Button
               color={stylesColors.default}
               text="Masuk"
               onPress={handleLogin}
-              loadingLogin={loadingLogin}
+              loading={loadingLogin}
             />
           </View>
         </View>
