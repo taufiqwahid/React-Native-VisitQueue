@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {Text, View} from 'react-native';
 import {stylesColors} from '../utils/stylesColors';
 import {stylesTexts} from '../utils/stylesTexts';
 
@@ -8,9 +8,10 @@ const CardQueue = ({count, text1, text2}) => {
     <View
       style={{
         alignItems: 'center',
+        flex: 1,
         backgroundColor: stylesColors.white,
         paddingVertical: 20,
-        paddingHorizontal: 30,
+        paddingHorizontal: 20,
         borderRadius: 10,
         shadowColor: '#000',
         shadowOffset: {

@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import {stylesTexts} from '../utils/stylesTexts';
 
-const Button = ({text, color, onPress, disabled, loadingLogin}) => {
+const Button = ({text, color, onPress, disabled, loading}) => {
   return (
     <TouchableOpacity
       disabled={disabled}
@@ -28,7 +28,7 @@ const Button = ({text, color, onPress, disabled, loadingLogin}) => {
         elevation: 5,
       }}>
       <Text style={{...stylesTexts.largeBold, color: '#fff'}}>
-        {loadingLogin ? <ActivityIndicator color="#fff" size="small" /> : text}
+        {loading ? <ActivityIndicator color="#fff" size="small" /> : text}
       </Text>
     </TouchableOpacity>
   );
