@@ -6,7 +6,13 @@ import {stylesTexts} from '../utils/stylesTexts';
 import Button from './Button';
 import TextCount from './TextCount';
 
-const Monitoring = ({disabled, sedangMenuju, handleSedangMenuju}) => {
+const Monitoring = ({
+  disabled,
+  sedangMenuju,
+  handleSedangMenuju,
+  data,
+  btnDisable,
+}) => {
   return (
     <View
       style={{
@@ -28,18 +34,45 @@ const Monitoring = ({disabled, sedangMenuju, handleSedangMenuju}) => {
           resizeMode="contain"
           style={{width: 150, height: 150}}
         />
-        <TextCount count={30} text1="Antrian" text2="Tersisa" />
+        <TextCount
+          count={
+            data?.antrian?.antrianMasuk?.total -
+              data?.antrian?.antrianKeluar?.total <
+            0
+              ? 0
+              : data?.antrian?.antrianMasuk?.total -
+                data?.antrian?.antrianKeluar?.total
+          }
+          text1="Jumlah"
+          text2="Antrian"
+        />
       </View>
       <View
         style={{
           justifyContent: 'space-around',
           flexDirection: 'row',
         }}>
-        <TextCount count={40} text1="Jumlah" text2="Pengunjung" />
-        <TextCount count={40} text1="Batas" text2="Pengunjung" />
+        <TextCount
+          count={
+            data?.pengunjung?.pengunjungMasuk?.total -
+              data?.pengunjung?.pengunjungKeluar?.total <
+            0
+              ? 0
+              : data?.pengunjung?.pengunjungMasuk?.total -
+                data?.pengunjung?.pengunjungKeluar?.total
+          }
+          text1="Jumlah"
+          text2="Pengunjung"
+        />
+        <TextCount
+          count={data?.pengunjung?.batas}
+          text1="Batas"
+          text2="Pengunjung"
+        />
       </View>
       <View style={{height: 30}} />
       <Button
+        disabled={btnDisable}
         type={disabled || sedangMenuju}
         text={sedangMenuju ? 'Ada yang menuju kesana' : 'Sedang menuju kesana?'}
         color={sedangMenuju ? stylesColors.default2 : stylesColors.green}
