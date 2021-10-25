@@ -1,6 +1,6 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Image, StyleSheet} from 'react-native';
 import {
   AdminActive,
@@ -8,6 +8,7 @@ import {
   HomeActive,
   HomeInactive,
 } from '../assets/image';
+import {getData} from '../config/LocalStorage';
 import Dashboard from '../pages/Admin/Dashboard';
 import Home from '../pages/Home';
 import IntroScreen from '../pages/Intro';
@@ -17,9 +18,14 @@ import {stylesColors} from '../utils/stylesColors';
 const Router = () => {
   const [showSplash, setShowSplash] = useState(true);
   const [statusIntro, setstatusIntro] = useState(false);
+  const [statusLogin, setStatusLogin] = useState(false);
 
   const Tab = createBottomTabNavigator();
   const Stack = createNativeStackNavigator();
+
+  useEffect(() => {
+    getData('@statusLogin').then(item => setStatusLogin(item));
+  }, []);
 
   const StackHome = () => {
     return (
@@ -46,7 +52,7 @@ const Router = () => {
         <Stack.Screen
           name="Login"
           component={Home}
-          initialParams={{ScreenLogin: true}}
+          initialParams={{ScreenLogin: true, statusLogin: statusLogin}}
         />
         <Stack.Screen name="Dashboard" component={Dashboard} />
       </Stack.Navigator>

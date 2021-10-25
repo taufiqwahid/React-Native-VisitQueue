@@ -14,7 +14,7 @@ import Button from '../../component/Button';
 import Header from '../../component/Header';
 import InputComp from '../../component/InputComp';
 import Monitoring from '../../component/Monitoring';
-import Firebase from '../../config/Firebase';
+import {storeData} from '../../config/LocalStorage';
 import {stylesColors} from '../../utils/stylesColors';
 import {stylesTexts} from '../../utils/stylesTexts';
 
@@ -31,7 +31,6 @@ const Home = ({navigation, route}) => {
   const auth = getAuth();
 
   useEffect(() => {
-    console.log(getDatabase(Firebase));
     const getAll = ref(db, '/');
     onValue(getAll, snapshot => {
       setLoading(false);
@@ -47,13 +46,39 @@ const Home = ({navigation, route}) => {
     });
   }, []);
 
+  useEffect(() => {
+    handleNavigationLogin();
+    const unsubscribe = navigation.addListener('focus', () => {
+      handleNavigationLogin();
+    });
+
+    return unsubscribe;
+  }, [
+    route?.params?.ScreenLogin,
+    route?.params?.statusLogin,
+    navigation,
+    route?.name,
+  ]);
+
+  const handleNavigationLogin = () => {
+    console.log('route', route, navigation);
+    if (route?.params?.ScreenLogin && route?.params?.statusLogin !== true) {
+      modalizeRef.current?.open();
+    } else {
+      if (route?.name == 'Monitoring') {
+        navigation?.replace('Dashboard');
+      }
+    }
+  };
+
   const handleLogin = () => {
     if (email == '' || password == '') {
       showMessage({
         duration: 100,
+        animationDuration: 100,
         statusBarHeight: 20,
         message: 'Form Login',
-        description: 'Lengkapi Form Login terlebih dahulu',
+        description: 'Pastikan Email dan Password lengkap',
         type: 'error',
         icon: 'error',
         backgroundColor: stylesColors.default2,
@@ -70,10 +95,12 @@ const Home = ({navigation, route}) => {
           setLoadingLogin(false);
           // Signed in
           const user = userCredential.user;
-          console.log('user', user);
+          console.log('Signed in', user);
+          storeData('@statusLogin', true);
 
           showMessage({
             duration: 100,
+            animationDuration: 100,
             statusBarHeight: 20,
             message: 'LOGIN BERHASIL',
             description: 'Selamat Datang Admin',
@@ -96,6 +123,7 @@ const Home = ({navigation, route}) => {
           console.log('ERRR', errorCode, errorMessage);
           showMessage({
             duration: 100,
+            animationDuration: 100,
             statusBarHeight: 20,
             message: 'LOGIN TIDAK BERHASIL',
             description: 'Hanya Admin yang dapat login',
@@ -125,16 +153,6 @@ const Home = ({navigation, route}) => {
         setSedangMenuju(sedangMenuju);
       });
   };
-
-  useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      if (route?.params?.ScreenLogin) {
-        modalizeRef.current?.open();
-      }
-    });
-
-    return unsubscribe;
-  }, [route?.params?.ScreenLogin, navigation, route?.name]);
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#F2F6FB'}}>
@@ -178,7 +196,7 @@ const Home = ({navigation, route}) => {
           <InputComp
             title="Password"
             onChangeText={setPassword}
-            password={false}
+            password={true}
           />
           <View style={{marginVertical: 20}}>
             <Button
