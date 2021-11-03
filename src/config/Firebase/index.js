@@ -1,5 +1,4 @@
 // Import the functions you need from the SDKs you need
-import {initializeApp} from 'firebase/app';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyBNLDRrSqo01NqJMrr7tO2h2fy-VswcLHA',
@@ -12,6 +11,4 @@ const firebaseConfig = {
   measurementId: 'G-PHXH8L4797',
 };
 
-const Firebase = initializeApp(firebaseConfig);
-
-export default Firebase;
+export default firebaseConfig;
