@@ -1,6 +1,13 @@
-import React, {useEffect, useState} from 'react';
-import {Image, SafeAreaView, StyleSheet, Text, View} from 'react-native';
-import {ImageIntro1, ImageSplash} from '../../assets/image';
+import React, {useEffect} from 'react';
+import {
+  Image,
+  SafeAreaView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+import {ImageSplash} from '../../assets/image';
 import {getData} from '../../config/LocalStorage';
 import {stylesTexts} from '../../utils/stylesTexts';
 
@@ -25,6 +32,11 @@ const Splash = ({navigation}) => {
 
   return (
     <SafeAreaView style={{flex: 1}}>
+      <StatusBar
+        animated={true}
+        backgroundColor="#fff"
+        barStyle="dark-content"
+      />
       <View
         style={{
           flex: 1,
