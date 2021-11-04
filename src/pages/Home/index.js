@@ -15,6 +15,7 @@ import Header from '../../component/Header';
 import InputComp from '../../component/InputComp';
 import Monitoring from '../../component/Monitoring';
 import {storeData} from '../../config/LocalStorage';
+import {notifikasi} from '../../config/Notification';
 import {stylesColors} from '../../utils/stylesColors';
 import {stylesTexts} from '../../utils/stylesTexts';
 
@@ -50,6 +51,7 @@ const Home = ({navigation, route}) => {
 
   useEffect(() => {
     handleNavigationLogin();
+
     const unsubscribe = navigation.addListener('focus', () => {
       handleNavigationLogin();
     });
@@ -61,6 +63,25 @@ const Home = ({navigation, route}) => {
     navigation,
     route?.name,
   ]);
+
+  useEffect(() => {
+    console.log(
+      'KIRIM NOTIF',
+      dataMonitoring?.pengunjung?.pengunjungMasuk?.total -
+        dataMonitoring?.pengunjung?.pengunjungKeluar?.total +
+        5 <=
+        dataMonitoring?.pengunjung?.batas,
+    );
+    return () => {
+      notifikasi.configure();
+      notifikasi.buatChannel('1');
+      notifikasi.kirimNotifikasi(
+        '1',
+        'Haloo, kami dapat kunjungi nih',
+        'Silahkan cek aplikasi yah, untuk monitoring jumlah pengunjung yang sudah ada...',
+      );
+    };
+  }, [dataMonitoring?.pengunjung?.pengunjungKeluar?.total]);
 
   const handleNavigationLogin = () => {
     console.log(route?.params);
