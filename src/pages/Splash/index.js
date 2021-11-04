@@ -45,16 +45,17 @@ const Splash = ({navigation}) => {
           alignItems: 'center',
           paddingHorizontal: 80,
         }}>
-        <Image
+        {/* <Image
           source={ImageSplash}
           resizeMode="contain"
           style={{height: 250, width: 250}}
-        />
+        /> */}
         <Text
           style={{
             ...stylesTexts.extraLarge,
             textAlign: 'center',
             marginTop: -50,
+            fontSize: 40,
           }}>
           VisitQue
         </Text>
