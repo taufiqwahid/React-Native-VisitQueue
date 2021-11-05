@@ -4,6 +4,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import {
   ActivityIndicator,
   SafeAreaView,
+  ScrollView,
   StyleSheet,
   Text,
   View,
@@ -72,15 +73,21 @@ const Home = ({navigation, route}) => {
         5 <=
         dataMonitoring?.pengunjung?.batas,
     );
-    return () => {
-      notifikasi.configure();
-      notifikasi.buatChannel('1');
-      notifikasi.kirimNotifikasi(
-        '1',
-        'Haloo, kami dapat kunjungi nih',
-        'Silahkan cek aplikasi yah, untuk monitoring jumlah pengunjung yang sudah ada...',
-      );
-    };
+    if (
+      dataMonitoring?.pengunjung?.pengunjungMasuk?.total -
+        dataMonitoring?.pengunjung?.pengunjungKeluar?.total <
+      dataMonitoring?.pengunjung?.batas
+    ) {
+      return () => {
+        notifikasi.configure();
+        notifikasi.buatChannel('1');
+        notifikasi.kirimNotifikasi(
+          '1',
+          'Haloo, kami dapat dikunjungi nih',
+          'Silahkan cek aplikasi yah, untuk monitoring jumlah pengunjung yang sudah ada...',
+        );
+      };
+    }
   }, [dataMonitoring?.pengunjung?.pengunjungKeluar?.total]);
 
   const handleNavigationLogin = () => {
@@ -99,7 +106,6 @@ const Home = ({navigation, route}) => {
       showMessage({
         duration: 2000,
         animationDuration: 2000,
-
         message: 'Form Login',
         description: 'Pastikan Email dan Password lengkap',
         type: 'danger',
@@ -214,31 +220,33 @@ const Home = ({navigation, route}) => {
             </Text>
           </View>
         )}>
-        <View>
-          <InputComp
-            onfocus={() => setencrypPass(true)}
-            onBlur={() => setencrypPass(false)}
-            title="Email"
-            onChangeText={setEmail}
-            onBlur={() => setencrypPass(false)}
-          />
-          <InputComp
-            onfocus={() => setencrypPass(false)}
-            onBlur={() => setencrypPass(true)}
-            title="Password"
-            onChangeText={setPassword}
-            password={encrypPass}
-            onSubmitEditing={handleLogin}
-          />
-          <View style={{marginVertical: 20}}>
-            <Button
-              color={stylesColors.default}
-              text="Masuk"
-              onPress={handleLogin}
-              loading={loadingLogin}
+        <ScrollView style={{flex: 1}}>
+          <View>
+            <InputComp
+              onfocus={() => setencrypPass(true)}
+              onBlur={() => setencrypPass(false)}
+              title="Email"
+              onChangeText={setEmail}
+              onBlur={() => setencrypPass(false)}
             />
+            <InputComp
+              onfocus={() => setencrypPass(false)}
+              onBlur={() => setencrypPass(true)}
+              title="Password"
+              onChangeText={setPassword}
+              password={encrypPass}
+              onSubmitEditing={handleLogin}
+            />
+            <View style={{marginVertical: 20}}>
+              <Button
+                color={stylesColors.default}
+                text="Masuk"
+                onPress={handleLogin}
+                loading={loadingLogin}
+              />
+            </View>
           </View>
-        </View>
+        </ScrollView>
       </Modalize>
     </SafeAreaView>
   );
