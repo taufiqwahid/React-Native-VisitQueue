@@ -35,14 +35,7 @@ const Monitoring = ({
           style={{width: 150, height: 150}}
         />
         <TextCount
-          count={
-            data?.antrian?.antrianMasuk?.total -
-              data?.antrian?.antrianKeluar?.total <
-            0
-              ? 0
-              : data?.antrian?.antrianMasuk?.total -
-                data?.antrian?.antrianKeluar?.total
-          }
+          count={data?.antrian?.jumlahSaatIni?.total}
           text1="Jumlah"
           text2="Antrian"
         />
@@ -53,14 +46,7 @@ const Monitoring = ({
           flexDirection: 'row',
         }}>
         <TextCount
-          count={
-            data?.pengunjung?.pengunjungMasuk?.total -
-              data?.pengunjung?.pengunjungKeluar?.total <
-            0
-              ? 0
-              : data?.pengunjung?.pengunjungMasuk?.total -
-                data?.pengunjung?.pengunjungKeluar?.total
-          }
+          count={data?.pengunjung?.jumlahSaatIni?.total}
           text1="Jumlah"
           text2="Pengunjung"
         />

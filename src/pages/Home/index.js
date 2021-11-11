@@ -41,7 +41,7 @@ const Home = ({navigation, route}) => {
       console.log('Data', data);
       setDataMonitoring(data);
       setSedangMenuju(data?.pengunjung?.sedangMenuju);
-      let batasPengunjungMasuk = data?.pengunjung?.pengunjungMasuk?.total + 1;
+      let batasPengunjungMasuk = data?.pengunjung?.jumlahSaatIni.total + 1;
       setbtnDisable(
         data?.pengunjung?.sedangMenuju &&
           batasPengunjungMasuk >= data?.pengunjung?.batas,
@@ -66,16 +66,8 @@ const Home = ({navigation, route}) => {
   ]);
 
   useEffect(() => {
-    console.log(
-      'KIRIM NOTIF',
-      dataMonitoring?.pengunjung?.pengunjungMasuk?.total -
-        dataMonitoring?.pengunjung?.pengunjungKeluar?.total +
-        5 <=
-        dataMonitoring?.pengunjung?.batas,
-    );
     if (
-      dataMonitoring?.pengunjung?.pengunjungMasuk?.total -
-        dataMonitoring?.pengunjung?.pengunjungKeluar?.total <
+      dataMonitoring?.pengunjung?.jumlahSaatIni.total <
       dataMonitoring?.pengunjung?.batas
     ) {
       return () => {
@@ -88,7 +80,7 @@ const Home = ({navigation, route}) => {
         );
       };
     }
-  }, [dataMonitoring?.pengunjung?.pengunjungKeluar?.total]);
+  }, [dataMonitoring?.pengunjung?.triggerNotif]);
 
   const handleNavigationLogin = () => {
     console.log(route?.params);

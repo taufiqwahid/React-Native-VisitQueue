@@ -28,6 +28,7 @@ const Dashboard = ({navigation}) => {
   const [jmlPengunjung, setJmlPengunjung] = useState(0);
   const [jmlAntrian, setJmlAntrian] = useState(0);
   const [jmlBatasPengunjung, setJmlBatasPengunjung] = useState(0);
+  const [jmlTotalPengunjung, setJmlTotalPengunjung] = useState(0);
   const db = getDatabase();
   const auth = getAuth();
 
@@ -37,24 +38,11 @@ const Dashboard = ({navigation}) => {
     const unsubscribe = onValue(getAll, snapshot => {
       setLoading(false);
       const data = snapshot.val();
-      setJmlAntrian(
-        data?.antrian?.antrianMasuk?.total -
-          data?.antrian?.antrianKeluar?.total <
-          0
-          ? 0
-          : data?.antrian?.antrianMasuk?.total -
-              data?.antrian?.antrianKeluar?.total,
-      );
-      setJmlPengunjung(
-        data?.pengunjung?.pengunjungMasuk?.total -
-          data?.pengunjung?.pengunjungKeluar?.total <
-          0
-          ? 0
-          : data?.pengunjung?.pengunjungMasuk?.total -
-              data?.pengunjung?.pengunjungKeluar?.total,
-      );
+      setJmlAntrian(data?.antrian?.jumlahSaatIni?.total);
+      setJmlPengunjung(data?.pengunjung?.jumlahSaatIni?.total);
       setJmlBatasPengunjung(data?.pengunjung?.batas);
       setUpdateBatasan(data?.pengunjung?.batas);
+      setJmlTotalPengunjung(data?.pengunjung?.jumlahPengunjung?.total);
     });
     return unsubscribe;
   }, []);
@@ -185,13 +173,32 @@ const Dashboard = ({navigation}) => {
               <CardQueue count={jmlAntrian} text1="Jumlah" text2="Antrian" />
             </View>
 
-            <View style={{marginBottom: 20}}>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                marginBottom: 20,
+              }}>
+              <CardQueue
+                count={jmlBatasPengunjung}
+                text1="Batas"
+                text2="Antrian"
+              />
+              <View style={{width: 20}} />
+              <CardQueue
+                count={jmlTotalPengunjung}
+                text1="Jumlah Total"
+                text2="Pengunjung"
+              />
+            </View>
+
+            {/* <View style={{marginBottom: 20}}>
               <CardQueue
                 count={jmlBatasPengunjung}
                 text1="Jumlah Batas"
                 text2="Antrian"
               />
-            </View>
+            </View> */}
 
             <View style={{marginVertical: 20}}>
               <Text
