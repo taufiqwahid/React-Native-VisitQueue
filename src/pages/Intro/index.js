@@ -1,8 +1,8 @@
 import React from 'react';
-import {Image, SafeAreaView, Text, View} from 'react-native';
+import {Image, SafeAreaView, StatusBar, Text, View} from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import {ImageIntro1, ImageIntro2, ImageIntro3} from '../../assets/image';
-import {getData, storeData} from '../../config/LocalStorage';
+import {storeData} from '../../config/LocalStorage';
 import {stylesColors} from '../../utils/stylesColors';
 import {stylesTexts} from '../../utils/stylesTexts';
 
@@ -93,6 +93,11 @@ const IntroScreen = ({navigation}) => {
 
   return (
     <SafeAreaView style={{flex: 1}}>
+      <StatusBar
+        animated={true}
+        backgroundColor="#fff"
+        barStyle="dark-content"
+      />
       <View style={{flex: 1, backgroundColor: '#fff'}}>
         <AppIntroSlider
           renderNextButton={nextText}
