@@ -1,7 +1,10 @@
+import {getAuth, signInWithEmailAndPassword} from 'firebase/auth';
+import {getDatabase, onValue, ref, set} from 'firebase/database';
 import React, {useEffect, useRef, useState} from 'react';
 import {
   ActivityIndicator,
   SafeAreaView,
+  ScrollView,
   StyleSheet,
   Text,
   View,
@@ -12,6 +15,8 @@ import Button from '../../component/Button';
 import Header from '../../component/Header';
 import InputComp from '../../component/InputComp';
 import Monitoring from '../../component/Monitoring';
+import {storeData} from '../../config/LocalStorage';
+import {notifikasi} from '../../config/Notification';
 import {stylesColors} from '../../utils/stylesColors';
 import {stylesTexts} from '../../utils/stylesTexts';
 
@@ -19,39 +24,155 @@ const Home = ({navigation, route}) => {
   const modalizeRef = useRef(null);
   const [loading, setLoading] = useState(true);
   const [sedangMenuju, setSedangMenuju] = useState(false);
-
-  const handleSedangMenuju = () => {
-    setSedangMenuju(!sedangMenuju);
-  };
+  const [dataMonitoring, setDataMonitoring] = useState([]);
+  const [btnDisable, setbtnDisable] = useState(false);
+  const [loadingLogin, setLoadingLogin] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [encrypPass, setencrypPass] = useState(false);
+  const db = getDatabase();
+  const auth = getAuth();
 
   useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
+    const getAll = ref(db, '/');
+    const unsubscribe = onValue(getAll, snapshot => {
       setLoading(false);
-      if (route?.params?.ScreenLogin) {
-        modalizeRef.current?.open();
-      }
+      const data = snapshot.val();
+      console.log('Data', data);
+      setDataMonitoring(data);
+      setSedangMenuju(data?.pengunjung?.sedangMenuju);
+      let batasPengunjungMasuk = data?.pengunjung?.jumlahSaatIni.total + 1;
+      setbtnDisable(
+        data?.pengunjung?.sedangMenuju &&
+          batasPengunjungMasuk >= data?.pengunjung?.batas,
+      );
+    });
+    return unsubscribe;
+  }, []);
+
+  useEffect(() => {
+    handleNavigationLogin();
+
+    const unsubscribe = navigation.addListener('focus', () => {
+      handleNavigationLogin();
     });
 
     return unsubscribe;
-  }, [route?.params?.ScreenLogin, navigation, route?.name]);
+  }, [
+    route?.params?.ScreenLogin,
+    route?.params?.statusLogin,
+    navigation,
+    route?.name,
+  ]);
 
-  const Login = () => {
-    showMessage({
-      statusBarHeight: 20,
-      message: 'LOGIN BERHASIL',
-      description: 'Selamat Datang Admin',
-      type: 'success',
-      icon: 'success',
-      backgroundColor: stylesColors.default,
-      color: stylesColors.white,
-      style: {
-        borderBottomEndRadius: 20,
-        borderBottomStartRadius: 20,
-      },
-    });
-    setTimeout(() => {
-      navigation.replace('Dashboard');
-    }, 500);
+  useEffect(() => {
+    if (
+      dataMonitoring?.pengunjung?.jumlahSaatIni.total <
+      dataMonitoring?.pengunjung?.batas
+    ) {
+      return () => {
+        notifikasi.configure();
+        notifikasi.buatChannel('1');
+        notifikasi.kirimNotifikasi(
+          '1',
+          'Haloo, kami dapat dikunjungi nih',
+          'Silahkan cek aplikasi yah, untuk monitoring jumlah pengunjung yang sudah ada...',
+        );
+      };
+    }
+  }, [dataMonitoring?.pengunjung?.triggerNotif]);
+
+  const handleNavigationLogin = () => {
+    console.log(route?.params);
+    if (route?.params?.statusLogin) {
+      navigation?.replace('Dashboard');
+    } else {
+      if (route?.params?.ScreenLogin) {
+        modalizeRef.current?.open();
+      }
+    }
+  };
+
+  const handleLogin = () => {
+    if (email == '' || password == '') {
+      showMessage({
+        duration: 2000,
+        animationDuration: 2000,
+        message: 'Form Login',
+        description: 'Pastikan Email dan Password lengkap',
+        type: 'danger',
+        icon: 'danger',
+        backgroundColor: stylesColors.danger2,
+        color: stylesColors.white,
+        style: {
+          borderBottomEndRadius: 20,
+          borderBottomStartRadius: 20,
+        },
+      });
+    } else {
+      setLoadingLogin(true);
+      signInWithEmailAndPassword(auth, email, password)
+        .then(userCredential => {
+          setLoadingLogin(false);
+          // Signed in
+          const user = userCredential.user;
+          console.log('Signed in', user);
+          storeData('@statusLogin', true);
+
+          showMessage({
+            duration: 2000,
+            animationDuration: 2000,
+
+            message: 'LOGIN BERHASIL',
+            description: 'Selamat Datang Admin',
+            type: 'success',
+            icon: 'success',
+            backgroundColor: stylesColors.dangert,
+            color: stylesColors.white,
+            style: {
+              borderBottomEndRadius: 20,
+              borderBottomStartRadius: 20,
+            },
+          });
+
+          navigation.replace('Dashboard');
+        })
+        .catch(error => {
+          setLoadingLogin(false);
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log('ERRR', errorCode, errorMessage);
+          showMessage({
+            duration: 2000,
+            animationDuration: 2000,
+
+            message: 'LOGIN TIDAK BERHASIL',
+            description: 'Hanya Admin yang dapat login',
+            type: 'danger',
+            icon: 'danger',
+            backgroundColor: stylesColors.default2,
+            color: stylesColors.white,
+            style: {
+              borderBottomEndRadius: 20,
+              borderBottomStartRadius: 20,
+            },
+          });
+        });
+    }
+  };
+
+  const handleSedangMenuju = () => {
+    set(ref(db, 'pengunjung/sedangMenuju'), !sedangMenuju)
+      .then(() => {
+        // Data saved successfully!
+        console.log('suksess');
+        setSedangMenuju(!sedangMenuju);
+      })
+      .catch(error => {
+        // The write failed...
+        console.log('gagal', error);
+        setSedangMenuju(sedangMenuju);
+      });
   };
 
   return (
@@ -64,6 +185,8 @@ const Home = ({navigation, route}) => {
       ) : (
         <View style={{margin: 20}}>
           <Monitoring
+            btnDisable={btnDisable}
+            data={dataMonitoring}
             disabled={route?.params?.ScreenLogin}
             sedangMenuju={sedangMenuju}
             handleSedangMenuju={handleSedangMenuju}
@@ -89,13 +212,33 @@ const Home = ({navigation, route}) => {
             </Text>
           </View>
         )}>
-        <View>
-          <InputComp title="Username" />
-          <InputComp title="Password" password={false} />
-          <View style={{marginVertical: 20}}>
-            <Button color={stylesColors.default} text="Masuk" onPress={Login} />
+        <ScrollView style={{flex: 1}}>
+          <View>
+            <InputComp
+              onfocus={() => setencrypPass(true)}
+              onBlur={() => setencrypPass(false)}
+              title="Email"
+              onChangeText={setEmail}
+              onBlur={() => setencrypPass(false)}
+            />
+            <InputComp
+              onfocus={() => setencrypPass(false)}
+              onBlur={() => setencrypPass(true)}
+              title="Password"
+              onChangeText={setPassword}
+              password={encrypPass}
+              onSubmitEditing={handleLogin}
+            />
+            <View style={{marginVertical: 20}}>
+              <Button
+                color={stylesColors.default}
+                text="Masuk"
+                onPress={handleLogin}
+                loading={loadingLogin}
+              />
+            </View>
           </View>
-        </View>
+        </ScrollView>
       </Modalize>
     </SafeAreaView>
   );

@@ -1,8 +1,13 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {
+  ActivityIndicator,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
 import {stylesTexts} from '../utils/stylesTexts';
 
-const Button = ({text, color, onPress, disabled}) => {
+const Button = ({text, color, onPress, disabled, loading}) => {
   return (
     <TouchableOpacity
       disabled={disabled}
@@ -22,7 +27,9 @@ const Button = ({text, color, onPress, disabled}) => {
 
         elevation: 5,
       }}>
-      <Text style={{...stylesTexts.largeBold, color: '#fff'}}>{text}</Text>
+      <Text style={{...stylesTexts.largeBold, color: '#fff'}}>
+        {loading ? <ActivityIndicator color="#fff" size="small" /> : text}
+      </Text>
     </TouchableOpacity>
   );
 };
