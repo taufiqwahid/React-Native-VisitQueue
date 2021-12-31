@@ -182,7 +182,7 @@ const Dashboard = ({navigation}) => {
               <CardQueue
                 count={jmlBatasPengunjung}
                 text1="Batas"
-                text2="Antrian"
+                text2="Pengunjung"
               />
               <View style={{width: 20}} />
               <CardQueue
