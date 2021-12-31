@@ -6,6 +6,9 @@ import HomeInactive from './TabBottom/homeInactive.png';
 import HomeActive from './TabBottom/homeActive.png';
 import AdminInactive from './TabBottom/adminInactive.png';
 import AdminActive from './TabBottom/adminActive.png';
+import ImageBank from './bank.png';
+import ImageBike from './Bike.png';
+import ImageGps from './Gps.png';
 
 export {
   ImageSplash,
@@ -16,4 +19,7 @@ export {
   AdminInactive,
   HomeActive,
   HomeInactive,
+  ImageBank,
+  ImageBike,
+  ImageGps,
 };

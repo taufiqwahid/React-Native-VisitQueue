@@ -12,6 +12,7 @@ import {getData} from '../config/LocalStorage';
 import Dashboard from '../pages/Admin/Dashboard';
 import Home from '../pages/Home';
 import IntroScreen from '../pages/Intro';
+import Location from '../pages/Location';
 import Splash from '../pages/Splash';
 import {stylesColors} from '../utils/stylesColors';
 
@@ -37,6 +38,22 @@ const Router = () => {
         <Stack.Screen
           name="Monitoring"
           component={Home}
+          initialParams={{ScreenLogin: false}}
+        />
+      </Stack.Navigator>
+    );
+  };
+
+  const StackLocation = () => {
+    return (
+      <Stack.Navigator
+        initialRouteName="Location"
+        screenOptions={{
+          headerShown: false,
+        }}>
+        <Stack.Screen
+          name="Monitoring"
+          component={Location}
           initialParams={{ScreenLogin: false}}
         />
       </Stack.Navigator>
@@ -92,6 +109,32 @@ const Router = () => {
               ),
           }}
         />
+
+        <Tab.Screen
+          name="Location"
+          component={StackLocation}
+          options={{
+            tabBarLabelStyle: {
+              fontFamily: 'Poppins-Medium',
+              fontSize: 12,
+            },
+            tabBarIcon: ({color, focused, size}) =>
+              focused ? (
+                <Image
+                  resizeMode="contain"
+                  source={HomeActive}
+                  style={{height: 25, width: 25}}
+                />
+              ) : (
+                <Image
+                  resizeMode="contain"
+                  source={HomeInactive}
+                  style={{height: 25, width: 25}}
+                />
+              ),
+          }}
+        />
+
         <Tab.Screen
           name="Admin"
           component={StackAdmin}

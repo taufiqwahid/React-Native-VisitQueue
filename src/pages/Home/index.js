@@ -64,11 +64,12 @@ const Home = ({navigation, route}) => {
     navigation,
     route?.name,
   ]);
-
+  console.log(' route?.name', route?.name);
   useEffect(() => {
     if (
       dataMonitoring?.pengunjung?.jumlahSaatIni.total <
-      dataMonitoring?.pengunjung?.batas
+        dataMonitoring?.pengunjung?.batas &&
+      route?.name == 'Monitoring'
     ) {
       return () => {
         notifikasi.configure();
