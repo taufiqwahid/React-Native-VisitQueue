@@ -1,5 +1,4 @@
-import Geolocation from 'react-native-geolocation-service';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   Dimensions,
   Image,
@@ -11,6 +10,7 @@ import {
   View,
 } from 'react-native';
 import {showMessage} from 'react-native-flash-message';
+import Geolocation from 'react-native-geolocation-service';
 import MapView, {Marker} from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
 import {ImageBank, ImageBike, ImageGps} from '../../assets/image';
@@ -27,6 +27,7 @@ const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 const Location = () => {
   const GOOGLE_MAPS_APIKEY = apiKeyMaps;
   const [mapView, setMapView] = useState(null);
+  const [markerView, setMarkerView] = useState(null);
   const [distace, setDistace] = useState(0);
   const [duration, setDuration] = useState(0);
   const [arrowGps, setArrowGps] = useState(0);
@@ -44,11 +45,24 @@ const Location = () => {
     longitudeDelta: LONGITUDE_DELTA,
   });
   const [coorBank, setCoorBank] = useState({
-    latitude: -5.1492722,
-    longitude: 119.4480734,
+    // latitude: -5.1492722,
+    // longitude: 119.4480734,
+    latitude: -5.2026051,
+    longitude: 119.4799551,
+    latitudeDelta: LATITUDE_DELTA,
+    longitudeDelta: LONGITUDE_DELTA,
   });
+  const markerRef = useRef();
 
-  const [zoomCount, setZoomCount] = useState(5);
+  const [zoomCount, setZoomCount] = useState(18);
+
+  const counterZoom = type => {
+    if (type == 'min') {
+      setZoomCount(zoomCount <= 1 ? 1 : zoomCount - 2);
+    } else {
+      setZoomCount(zoomCount >= 20 ? 20 : zoomCount + 2);
+    }
+  };
 
   const onMapPress = e => {
     setCoordinates([...coordinates, e.nativeEvent.coordinate]);
@@ -89,34 +103,34 @@ const Location = () => {
 
   const getLocationOnce = async () => {
     await Geolocation.getCurrentPosition(info => {
-      console.log('info', info.coords);
+      console.log('info', info?.coords);
 
-      setArrowGps(info.coords.heading);
+      setArrowGps(info?.coords?.heading);
       setCoorUser({
-        latitude: info.coords.latitude,
-        longitude: info.coords.longitude,
-      });
-
-      setRegion({
-        latitude: info.coords.latitude,
-        longitude: info.coords.longitude,
+        latitude: info?.coords?.latitude,
+        longitude: info?.coords?.longitude,
         latitudeDelta: Math.abs(LATITUDE_DELTA),
         longitudeDelta: Math.abs(LONGITUDE_DELTA),
       });
+
+      getLocationDevice();
     });
   };
+
   const getLocationDevice = async () => {
     // await Geolocation.watchPosition(data => console.log('data', data));
 
     setWatchId(
       await Geolocation.watchPosition(
         info => {
-          console.log('info', info.coords);
-
-          setArrowGps(info.coords.heading);
+          console.log('info', info?.coords);
+          // animate(info?.coords?.latitude, info?.coords?.longitude);
+          setArrowGps(info?.coords?.heading);
           setCoorUser({
-            latitude: info.coords.latitude,
-            longitude: info.coords.longitude,
+            latitude: info?.coords?.latitude,
+            longitude: info?.coords?.longitude,
+            latitudeDelta: Math.abs(LATITUDE_DELTA),
+            longitudeDelta: Math.abs(LONGITUDE_DELTA),
           });
         },
         err => console.log('erre', err),
@@ -144,13 +158,6 @@ const Location = () => {
     };
   }, []);
 
-  useEffect(() => {
-    // const interval = setInterval(() => {
-    //   getLocationDevice();
-    // }, 6000);
-    // return () => clearInterval(interval);
-  }, []);
-
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#F2F6FB'}}>
       <View style={{flex: 1}}>
@@ -159,31 +166,23 @@ const Location = () => {
 
       <View style={styles.container}>
         <MapView
-          // minZoomLevel={zoomCount}
-          // onRegionChangeComplete={R =>
-          //   setRegion({
-          //     latitude: R.latitude,
-          //     longitude: R.longitude,
-          //     latitudeDelta: Math.abs(R.latitudeDelta),
-          //     longitudeDelta: Math.abs(R.longitudeDelta),
-          //   })
-          // }
-          followsUserLocation
+          zoomControlEnabled
           initialRegion={{
             latitude: coorUser.latitude,
             longitude: coorUser.longitude,
             latitudeDelta: Math.abs(LATITUDE_DELTA),
             longitudeDelta: Math.abs(LONGITUDE_DELTA),
           }}
-          showsUserLocation={false}
-          showsMyLocationButton={false}
+          showsUserLocation={true}
+          showsMyLocationButton={true}
           style={StyleSheet.absoluteFill}
-          loadingEnabled
-          loadingIndicatorColor={stylesColors.default}
-          ref={c => setMapView(c)}
-          // onPress={onMapPress}
-        >
-          <Marker coordinate={coorBank}>
+          ref={c => setMapView(c)}>
+          <Marker
+            ref={marker => setMarkerView(marker)}
+            key={1}
+            coordinate={coorBank}
+            title="Bank"
+            description={`${coorBank.latitude},${coorBank.longitude}`}>
             <Image
               source={ImageBank}
               style={{
@@ -194,68 +193,74 @@ const Location = () => {
               resizeMethod="scale"
             />
           </Marker>
-          <Marker coordinate={coorUser}>
+          <Marker
+            ref={marker => setMarkerView(marker)}
+            key={2}
+            coordinate={coorUser}
+            title="Lokasi Sekarang"
+            style={{
+              position: 'absolute',
+            }}
+            description={`${coorUser.latitude},${coorUser.longitude}`}>
             <Image
               source={ImageBike}
               style={{
-                height: 50,
-                width: 50,
+                height: 30,
+                backgroundColor: 'red',
+                width: 30,
                 resizeMode: 'contain',
-
-                transform: [{rotate: `${arrowGps}deg`}],
+                transform: [{rotate: arrowGps ? `${arrowGps}deg` : `0deg`}],
               }}
               resizeMethod="scale"
             />
           </Marker>
 
-          <MapViewDirections
-            origin={coorBank}
-            // waypoints={
-            //   coordinates.length > 2 ? coordinates.slice(1, -1) : undefined
-            // }
-            destination={coorUser}
-            apikey={GOOGLE_MAPS_APIKEY}
-            strokeWidth={7}
-            strokeColor={stylesColors.default}
-            optimizeWaypoints={true}
-            onStart={params => {
-              console.log(
-                `Started routing between "${params.origin}" and "${params.destination}"`,
-              );
-            }}
-            onReady={result => {
-              setDistace(`${Number(result.distance).toFixed(1)} km`);
-              setDuration(`${Number(result.duration).toFixed(0)} menit.`);
-              console.log('distance', result.distance);
-              console.log('duration', result.duration);
-              mapView.fitToCoordinates(result.coordinates, {
-                edgePadding: {
-                  right: width / 20,
-                  bottom: height / 20,
-                  left: width / 20,
-                  top: height / 20,
-                },
-              });
-            }}
-            onError={errorMessage => {
-              // console.log('GOT AN ERROR');
-            }}
-          />
+          {coorUser.latitude !== region.latitude ? (
+            <MapViewDirections
+              origin={coorUser}
+              waypoints={[coorBank, coorUser]}
+              destination={coorBank}
+              apikey={GOOGLE_MAPS_APIKEY}
+              strokeWidth={7}
+              strokeColor={stylesColors.default}
+              optimizeWaypoints={true}
+              onStart={params => {
+                console.log(
+                  `Started routing between "${params.origin}" and "${params.destination}"`,
+                );
+              }}
+              onReady={result => {
+                setDistace(`${Number(result.distance).toFixed(1)} KM`);
+                setDuration(`${Number(result.duration).toFixed(0)} Menit`);
+                console.log('distance', result.distance);
+                console.log('duration', result.duration);
+
+                mapView.fitToCoordinates(result.coordinates, {
+                  edgePadding: {
+                    right: width / 20,
+                    bottom: height / 20,
+                    left: width / 20,
+                    top: height / 20,
+                  },
+                });
+              }}
+              onError={errorMessage => {
+                console.log('GOT AN ERROR', errorMessage);
+              }}
+            />
+          ) : (
+            <></>
+          )}
         </MapView>
+
         <TouchableOpacity
           style={{
             position: 'absolute',
-            top: 100,
+            bottom: 100,
             right: 10,
           }}
           onPress={() => {
-            // setRegion({
-            //   latitude: coorUser.latitude,
-            //   longitude: coorUser.longitude,
-            //   latitudeDelta: Math.abs(LATITUDE_DELTA),
-            //   longitudeDelta: Math.abs(LONGITUDE_DELTA),
-            // });
-            setZoomCount(zoomCount + 1);
+            getLocationOnce();
           }}>
           <Image
             source={ImageGps}
@@ -266,16 +271,49 @@ const Location = () => {
             }}
           />
         </TouchableOpacity>
-        <Text style={{...stylesTexts.mediumBold}}>Jarak Lokasi :{distace}</Text>
-        <Text style={{...stylesTexts.mediumBold}}>
+        {/* <TouchableOpacity
+          style={{
+            position: 'absolute',
+            bottom: 100,
+            left: 10,
+            backgroundColor: 'white',
+          }}
+          onPress={() => counterZoom('plus')}>
+          <Image
+            source={IconPlus}
+            style={{
+              height: 40,
+              width: 40,
+              borderRadius: 10,
+              resizeMode: 'contain',
+            }}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{
+            position: 'absolute',
+            bottom: 50,
+            left: 10,
+            backgroundColor: 'white',
+          }}
+          onPress={() => counterZoom('min')}>
+          <Image
+            source={IconMin}
+            style={{
+              height: 40,
+              width: 40,
+              borderRadius: 10,
+              resizeMode: 'contain',
+            }}
+          />
+        </TouchableOpacity> */}
+        <Text style={{...stylesTexts.defaultBold}}>
+          Jarak Lokasi :{distace}
+        </Text>
+        <Text style={{...stylesTexts.defaultBold}}>
           Estimasi Waktu :{duration}
         </Text>
-        {
-          (console.log('coorbank', coorBank),
-          console.log('cooruser', coorUser),
-          console.log('object', StyleSheet.absoluteFill),
-          console.log('region', region))
-        }
+        {(console.log('coorbank', coorBank), console.log('cooruser', coorUser))}
       </View>
     </SafeAreaView>
   );
