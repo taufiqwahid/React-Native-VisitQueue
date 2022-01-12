@@ -11,6 +11,8 @@ import AdminActive from './TabBottom/adminActive.png';
 import AdminInactive from './TabBottom/adminInactive.png';
 import HomeActive from './TabBottom/homeActive.png';
 import HomeInactive from './TabBottom/homeInactive.png';
+import LocationActive from './TabBottom/locationActive.png';
+import LocationInactive from './TabBottom/locationInactive.png';
 
 export {
   ImageSplash,
@@ -21,6 +23,8 @@ export {
   AdminInactive,
   HomeActive,
   HomeInactive,
+  LocationActive,
+  LocationInactive,
   ImageBank,
   ImageBike,
   ImageGps,
