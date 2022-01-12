@@ -1,3 +1,5 @@
+import {getDatabase, onValue, ref} from '@firebase/database';
+import {getAuth} from 'firebase/auth';
 import React, {useEffect, useRef, useState} from 'react';
 import {
   Dimensions,
@@ -55,6 +57,22 @@ const Location = () => {
   const markerRef = useRef();
 
   const [zoomCount, setZoomCount] = useState(18);
+  const db = getDatabase();
+  const auth = getAuth();
+
+  useEffect(() => {
+    const getLocation = ref(db, '/admin/lokasi');
+    const unsubscribe = onValue(getLocation, snapshot => {
+      console.log('data location', snapshot.val());
+      const data = snapshot.val();
+
+      setCoorBank({
+        latitude: data.latitude,
+        longitude: data.longitude,
+      });
+    });
+    return unsubscribe;
+  }, []);
 
   const counterZoom = type => {
     if (type == 'min') {
@@ -114,7 +132,11 @@ const Location = () => {
       });
 
       getLocationDevice();
-    });
+    }),
+      err => {
+        alert('Fetching the Position failed, please check location is enable!');
+      },
+      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000};
   };
 
   const getLocationDevice = async () => {
@@ -123,7 +145,7 @@ const Location = () => {
     setWatchId(
       await Geolocation.watchPosition(
         info => {
-          console.log('info', info?.coords);
+          // console.log('info', info?.coords);
           // animate(info?.coords?.latitude, info?.coords?.longitude);
           setArrowGps(info?.coords?.heading);
           setCoorUser({
@@ -137,7 +159,7 @@ const Location = () => {
         {
           enableHighAccuracy: true,
           timeout: 20000,
-          maximumAge: 0,
+          maximumAge: 1000,
           distanceFilter: 5,
         },
       ),
@@ -149,7 +171,7 @@ const Location = () => {
     getLocationOnce();
   }, []);
 
-  console.log('watttt', watchId);
+  // console.log('watttt', watchId);
 
   useEffect(() => {
     getLocationDevice();
@@ -173,8 +195,8 @@ const Location = () => {
             latitudeDelta: Math.abs(LATITUDE_DELTA),
             longitudeDelta: Math.abs(LONGITUDE_DELTA),
           }}
-          showsUserLocation={true}
-          showsMyLocationButton={true}
+          showsUserLocation={false}
+          showsMyLocationButton={false}
           style={StyleSheet.absoluteFill}
           ref={c => setMapView(c)}>
           <Marker
@@ -206,7 +228,7 @@ const Location = () => {
               source={ImageBike}
               style={{
                 height: 30,
-                backgroundColor: 'red',
+                // backgroundColor: 'red',
                 width: 30,
                 resizeMode: 'contain',
                 transform: [{rotate: arrowGps ? `${arrowGps}deg` : `0deg`}],

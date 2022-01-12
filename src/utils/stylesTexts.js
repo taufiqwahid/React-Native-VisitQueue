@@ -2,55 +2,55 @@ import {stylesColors} from './stylesColors';
 
 export const stylesTexts = {
   defaultNormal: {
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'Roboto-Medium',
     color: stylesColors.default,
 
     fontSize: 14,
   },
   defaultBold: {
-    fontFamily: 'Poppins-SemiBold',
+    fontFamily: 'Roboto-Bold',
     color: stylesColors.default,
 
     fontSize: 14,
   },
   mediumNormal: {
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'Roboto-Medium',
     color: stylesColors.default,
 
     fontSize: 12,
   },
   mediumBold: {
-    fontFamily: 'Poppins-SemiBold',
+    fontFamily: 'Roboto-Bold',
     color: stylesColors.default,
 
     fontSize: 12,
   },
   smallNormal: {
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'Roboto-Medium',
     color: stylesColors.default,
 
     fontSize: 10,
   },
   smallBold: {
-    fontFamily: 'Poppins-SemiBold',
+    fontFamily: 'Roboto-Bold',
     color: stylesColors.default,
 
     fontSize: 10,
   },
   largeNormal: {
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'Roboto-Medium',
     color: stylesColors.default,
 
     fontSize: 16,
   },
   largeBold: {
-    fontFamily: 'Poppins-SemiBold',
+    fontFamily: 'Roboto-Bold',
     color: stylesColors.default,
 
     fontSize: 16,
   },
   extraLarge: {
-    fontFamily: 'Poppins-Bold',
+    fontFamily: 'Roboto-Black',
     color: stylesColors.default,
 
     fontSize: 20,

@@ -7,6 +7,8 @@ import {
   AdminInactive,
   HomeActive,
   HomeInactive,
+  LocationActive,
+  LocationInactive,
 } from '../assets/image';
 import {getData} from '../config/LocalStorage';
 import Dashboard from '../pages/Admin/Dashboard';
@@ -90,7 +92,7 @@ const Router = () => {
           component={StackHome}
           options={{
             tabBarLabelStyle: {
-              fontFamily: 'Poppins-Medium',
+              fontFamily: 'Roboto-Medium',
               fontSize: 12,
             },
             tabBarIcon: ({color, focused, size}) =>
@@ -115,20 +117,20 @@ const Router = () => {
           component={StackLocation}
           options={{
             tabBarLabelStyle: {
-              fontFamily: 'Poppins-Medium',
+              fontFamily: 'Roboto-Medium',
               fontSize: 12,
             },
             tabBarIcon: ({color, focused, size}) =>
               focused ? (
                 <Image
                   resizeMode="contain"
-                  source={HomeActive}
+                  source={LocationActive}
                   style={{height: 25, width: 25}}
                 />
               ) : (
                 <Image
                   resizeMode="contain"
-                  source={HomeInactive}
+                  source={LocationInactive}
                   style={{height: 25, width: 25}}
                 />
               ),
@@ -140,7 +142,7 @@ const Router = () => {
           component={StackAdmin}
           options={{
             tabBarLabelStyle: {
-              fontFamily: 'Poppins-Medium',
+              fontFamily: 'Roboto-Medium',
               fontSize: 12,
             },
             tabBarIcon: ({color, focused, size}) =>
