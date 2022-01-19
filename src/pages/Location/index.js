@@ -121,7 +121,7 @@ const Location = () => {
 
   const getLocationOnce = async () => {
     await Geolocation.getCurrentPosition(info => {
-      console.log('info', info?.coords);
+      console.log('info1', info?.coords);
 
       setArrowGps(info?.coords?.heading);
       setCoorUser({
@@ -130,6 +130,25 @@ const Location = () => {
         latitudeDelta: Math.abs(LATITUDE_DELTA),
         longitudeDelta: Math.abs(LONGITUDE_DELTA),
       });
+
+      if (info?.coords) {
+        mapView?.fitToCoordinates(
+          [
+            {
+              latitude: info?.coords?.latitude,
+              longitude: info?.coords?.longitude,
+            },
+          ],
+          {
+            edgePadding: {
+              right: width / 20,
+              bottom: height / 20,
+              left: width / 20,
+              top: height / 20,
+            },
+          },
+        );
+      }
 
       getLocationDevice();
     }),
@@ -145,7 +164,7 @@ const Location = () => {
     setWatchId(
       await Geolocation.watchPosition(
         info => {
-          // console.log('info', info?.coords);
+          console.log('info2', info?.coords);
           // animate(info?.coords?.latitude, info?.coords?.longitude);
           setArrowGps(info?.coords?.heading);
           setCoorUser({
@@ -252,12 +271,12 @@ const Location = () => {
                 );
               }}
               onReady={result => {
-                setDistace(`${Number(result.distance).toFixed(1)} KM`);
-                setDuration(`${Number(result.duration).toFixed(0)} Menit`);
-                console.log('distance', result.distance);
-                console.log('duration', result.duration);
+                setDistace(`${Number(result?.distance).toFixed(1)} KM`);
+                setDuration(`${Number(result?.duration).toFixed(0)} Menit`);
+                console.log('distance', result?.distance);
+                console.log('duration', result?.duration);
 
-                mapView.fitToCoordinates(result.coordinates, {
+                mapView.fitToCoordinates(result?.coordinates, {
                   edgePadding: {
                     right: width / 20,
                     bottom: height / 20,
