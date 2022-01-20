@@ -1,5 +1,5 @@
 import React from 'react';
-import {StatusBar, StyleSheet, Text, View} from 'react-native';
+import {Platform, StatusBar, StyleSheet, Text, View} from 'react-native';
 import {stylesTexts} from '../utils/stylesTexts';
 
 const Header = ({title}) => {
@@ -12,6 +12,11 @@ const Header = ({title}) => {
       />
       <View
         style={{
+          ...Platform.select({
+            ios: {
+              paddingTop: 40,
+            },
+          }),
           backgroundColor: '#fff',
           justifyContent: 'center',
           alignItems: 'center',

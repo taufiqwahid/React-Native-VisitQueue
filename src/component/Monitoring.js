@@ -36,8 +36,8 @@ const Monitoring = ({
         />
         <TextCount
           count={data?.antrian?.jumlahSaatIni?.total}
-          text1="Jumlah"
-          text2="Antrian"
+          text1="Antrian"
+          text2="Sekarang"
         />
       </View>
       <View

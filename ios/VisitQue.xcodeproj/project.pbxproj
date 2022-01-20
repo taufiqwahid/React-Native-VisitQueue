@@ -11,13 +11,19 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		5CA0CFE1CE4C597CAF62B8C3 /* libPods-VisitQue.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 01BC2B0796F571B6A5AF5F5F /* libPods-VisitQue.a */; };
+		7EA56DC556C3C18245519FE8 /* libPods-VisitQue-VisitQueTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A2CD20DB55474E643363665 /* libPods-VisitQue-VisitQueTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		374AED7AFDF14475A753F81D /* Poppins-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8F993881647742C6994F53A7 /* Poppins-Bold.ttf */; };
-		3B090DC670D44C3DAF2C83DC /* Poppins-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AC989F899156437185CE4BBA /* Poppins-ExtraBold.ttf */; };
-		9E5D66E9BC2D474E961A5E99 /* Poppins-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6CB21217D46F4749A52F13FC /* Poppins-Medium.ttf */; };
-		EC154061AF45441987B2C478 /* Poppins-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EFBE64410B4448DEADD0FC57 /* Poppins-Regular.ttf */; };
-		1182A27113CD49E3AEFA58D3 /* Poppins-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DA384DE77C3248469B9B9A95 /* Poppins-SemiBold.ttf */; };
-		038DE1CA7ED64B7CB0B84CBD /* Poppins.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8D35282B22FD48BCAB7191DE /* Poppins.ttf */; };
+		B74268AF722E41B395049F89 /* Poppins-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B24B1E693C2D4C9CAA6270D4 /* Poppins-Bold.ttf */; };
+		C23288F50B4242AF8B4170E6 /* Poppins-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 25F7B7C702D44934B8CF97A2 /* Poppins-ExtraBold.ttf */; };
+		00DBC38D949C4C91B361C813 /* Poppins-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9300018D20214BA7BC401059 /* Poppins-Medium.ttf */; };
+		2C0318E609974F64B705D6C4 /* Poppins-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B7C14066BFBB41BF83979C3A /* Poppins-Regular.ttf */; };
+		40655CBE0B3248EBAE6E0C19 /* Poppins-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 44B50CFB0209407296C2D3CD /* Poppins-SemiBold.ttf */; };
+		E77F360804804DF4B92E4D6A /* Roboto-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8D9C1A34A28143F2B9B8F981 /* Roboto-Black.ttf */; };
+		22F2E9D7C45E4E5FA04946EE /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 538F3E28FBE7440684513C4B /* Roboto-Bold.ttf */; };
+		2BCF554BDB3F457C9E8189D7 /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7B4348F2DAB34A049AEABEF1 /* Roboto-Light.ttf */; };
+		481E16172D794292BA09A4C3 /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 76F3883BBF0749BB9F6EF954 /* Roboto-Medium.ttf */; };
+		06C47731521E4B1E96457DED /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 46873407FB5046F1B6F44405 /* Roboto-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,20 +40,30 @@
 		00E356EE1AD99517003FC87E /* VisitQueTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VisitQueTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* VisitQueTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VisitQueTests.m; sourceTree = "<group>"; };
+		01BC2B0796F571B6A5AF5F5F /* libPods-VisitQue.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-VisitQue.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0A2CD20DB55474E643363665 /* libPods-VisitQue-VisitQueTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-VisitQue-VisitQueTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07F961A680F5B00A75B9A /* VisitQue.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VisitQue.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = VisitQue/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = VisitQue/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = VisitQue/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = VisitQue/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = VisitQue/main.m; sourceTree = "<group>"; };
+		37D2B167B90FA28AE962305D /* Pods-VisitQue-VisitQueTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VisitQue-VisitQueTests.release.xcconfig"; path = "Target Support Files/Pods-VisitQue-VisitQueTests/Pods-VisitQue-VisitQueTests.release.xcconfig"; sourceTree = "<group>"; };
+		4E0B3F825CCA5CA16390EA36 /* Pods-VisitQue.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VisitQue.release.xcconfig"; path = "Target Support Files/Pods-VisitQue/Pods-VisitQue.release.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = VisitQue/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		A055A59B5A40839EE65235C3 /* Pods-VisitQue-VisitQueTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VisitQue-VisitQueTests.debug.xcconfig"; path = "Target Support Files/Pods-VisitQue-VisitQueTests/Pods-VisitQue-VisitQueTests.debug.xcconfig"; sourceTree = "<group>"; };
+		E2408C42AE054A1C961ED908 /* Pods-VisitQue.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VisitQue.debug.xcconfig"; path = "Target Support Files/Pods-VisitQue/Pods-VisitQue.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		8F993881647742C6994F53A7 /* Poppins-Bold.ttf */ = {isa = PBXFileReference; name = "Poppins-Bold.ttf"; path = "../src/assets/fonts/Poppins-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		AC989F899156437185CE4BBA /* Poppins-ExtraBold.ttf */ = {isa = PBXFileReference; name = "Poppins-ExtraBold.ttf"; path = "../src/assets/fonts/Poppins-ExtraBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		6CB21217D46F4749A52F13FC /* Poppins-Medium.ttf */ = {isa = PBXFileReference; name = "Poppins-Medium.ttf"; path = "../src/assets/fonts/Poppins-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		EFBE64410B4448DEADD0FC57 /* Poppins-Regular.ttf */ = {isa = PBXFileReference; name = "Poppins-Regular.ttf"; path = "../src/assets/fonts/Poppins-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		DA384DE77C3248469B9B9A95 /* Poppins-SemiBold.ttf */ = {isa = PBXFileReference; name = "Poppins-SemiBold.ttf"; path = "../src/assets/fonts/Poppins-SemiBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		8D35282B22FD48BCAB7191DE /* Poppins.ttf */ = {isa = PBXFileReference; name = "Poppins.ttf"; path = "../src/assets/fonts/Poppins.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		B24B1E693C2D4C9CAA6270D4 /* Poppins-Bold.ttf */ = {isa = PBXFileReference; name = "Poppins-Bold.ttf"; path = "../assets/fonts/Poppins-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		25F7B7C702D44934B8CF97A2 /* Poppins-ExtraBold.ttf */ = {isa = PBXFileReference; name = "Poppins-ExtraBold.ttf"; path = "../assets/fonts/Poppins-ExtraBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		9300018D20214BA7BC401059 /* Poppins-Medium.ttf */ = {isa = PBXFileReference; name = "Poppins-Medium.ttf"; path = "../assets/fonts/Poppins-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		B7C14066BFBB41BF83979C3A /* Poppins-Regular.ttf */ = {isa = PBXFileReference; name = "Poppins-Regular.ttf"; path = "../assets/fonts/Poppins-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		44B50CFB0209407296C2D3CD /* Poppins-SemiBold.ttf */ = {isa = PBXFileReference; name = "Poppins-SemiBold.ttf"; path = "../assets/fonts/Poppins-SemiBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		8D9C1A34A28143F2B9B8F981 /* Roboto-Black.ttf */ = {isa = PBXFileReference; name = "Roboto-Black.ttf"; path = "../assets/fonts/Roboto-Black.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		538F3E28FBE7440684513C4B /* Roboto-Bold.ttf */ = {isa = PBXFileReference; name = "Roboto-Bold.ttf"; path = "../assets/fonts/Roboto-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		7B4348F2DAB34A049AEABEF1 /* Roboto-Light.ttf */ = {isa = PBXFileReference; name = "Roboto-Light.ttf"; path = "../assets/fonts/Roboto-Light.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		76F3883BBF0749BB9F6EF954 /* Roboto-Medium.ttf */ = {isa = PBXFileReference; name = "Roboto-Medium.ttf"; path = "../assets/fonts/Roboto-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		46873407FB5046F1B6F44405 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; name = "Roboto-Regular.ttf"; path = "../assets/fonts/Roboto-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +71,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7EA56DC556C3C18245519FE8 /* libPods-VisitQue-VisitQueTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -62,6 +79,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5CA0CFE1CE4C597CAF62B8C3 /* libPods-VisitQue.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -102,8 +120,38 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
+				01BC2B0796F571B6A5AF5F5F /* libPods-VisitQue.a */,
+				0A2CD20DB55474E643363665 /* libPods-VisitQue-VisitQueTests.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		34A836735A9BAC1F6EC3F599 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				E2408C42AE054A1C961ED908 /* Pods-VisitQue.debug.xcconfig */,
+				4E0B3F825CCA5CA16390EA36 /* Pods-VisitQue.release.xcconfig */,
+				A055A59B5A40839EE65235C3 /* Pods-VisitQue-VisitQueTests.debug.xcconfig */,
+				37D2B167B90FA28AE962305D /* Pods-VisitQue-VisitQueTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		50B58532284149D68EAC2545 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				B24B1E693C2D4C9CAA6270D4 /* Poppins-Bold.ttf */,
+				25F7B7C702D44934B8CF97A2 /* Poppins-ExtraBold.ttf */,
+				9300018D20214BA7BC401059 /* Poppins-Medium.ttf */,
+				B7C14066BFBB41BF83979C3A /* Poppins-Regular.ttf */,
+				44B50CFB0209407296C2D3CD /* Poppins-SemiBold.ttf */,
+				8D9C1A34A28143F2B9B8F981 /* Roboto-Black.ttf */,
+				538F3E28FBE7440684513C4B /* Roboto-Bold.ttf */,
+				7B4348F2DAB34A049AEABEF1 /* Roboto-Light.ttf */,
+				76F3883BBF0749BB9F6EF954 /* Roboto-Medium.ttf */,
+				46873407FB5046F1B6F44405 /* Roboto-Regular.ttf */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -122,6 +170,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				50B58532284149D68EAC2545 /* Resources */,
+				34A836735A9BAC1F6EC3F599 /* Pods */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -137,20 +186,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		50B58532284149D68EAC2545 /* Resources */ = {
-			isa = "PBXGroup";
-			children = (
-				8F993881647742C6994F53A7 /* Poppins-Bold.ttf */,
-				AC989F899156437185CE4BBA /* Poppins-ExtraBold.ttf */,
-				6CB21217D46F4749A52F13FC /* Poppins-Medium.ttf */,
-				EFBE64410B4448DEADD0FC57 /* Poppins-Regular.ttf */,
-				DA384DE77C3248469B9B9A95 /* Poppins-SemiBold.ttf */,
-				8D35282B22FD48BCAB7191DE /* Poppins.ttf */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-			path = "";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -158,9 +193,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "VisitQueTests" */;
 			buildPhases = (
+				6B70324D7E69B7EE660F0AB1 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
+				6E8EF2A7B292639BCFC95C37 /* [CP] Embed Pods Frameworks */,
+				0FB6407B0A7630FEA5F98A05 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -176,11 +214,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "VisitQue" */;
 			buildPhases = (
+				44044717FD0E45347A043D39 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
+				1FCCA851D7767392E919F0CC /* [CP] Embed Pods Frameworks */,
+				0AE84BE1BE941CD7AE6D0E7A /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -241,12 +282,16 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				374AED7AFDF14475A753F81D /* Poppins-Bold.ttf in Resources */,
-				3B090DC670D44C3DAF2C83DC /* Poppins-ExtraBold.ttf in Resources */,
-				9E5D66E9BC2D474E961A5E99 /* Poppins-Medium.ttf in Resources */,
-				EC154061AF45441987B2C478 /* Poppins-Regular.ttf in Resources */,
-				1182A27113CD49E3AEFA58D3 /* Poppins-SemiBold.ttf in Resources */,
-				038DE1CA7ED64B7CB0B84CBD /* Poppins.ttf in Resources */,
+				B74268AF722E41B395049F89 /* Poppins-Bold.ttf in Resources */,
+				C23288F50B4242AF8B4170E6 /* Poppins-ExtraBold.ttf in Resources */,
+				00DBC38D949C4C91B361C813 /* Poppins-Medium.ttf in Resources */,
+				2C0318E609974F64B705D6C4 /* Poppins-Regular.ttf in Resources */,
+				40655CBE0B3248EBAE6E0C19 /* Poppins-SemiBold.ttf in Resources */,
+				E77F360804804DF4B92E4D6A /* Roboto-Black.ttf in Resources */,
+				22F2E9D7C45E4E5FA04946EE /* Roboto-Bold.ttf in Resources */,
+				2BCF554BDB3F457C9E8189D7 /* Roboto-Light.ttf in Resources */,
+				481E16172D794292BA09A4C3 /* Roboto-Medium.ttf in Resources */,
+				06C47731521E4B1E96457DED /* Roboto-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -266,6 +311,118 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\nexport NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
+		};
+		0AE84BE1BE941CD7AE6D0E7A /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-VisitQue/Pods-VisitQue-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-VisitQue/Pods-VisitQue-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-VisitQue/Pods-VisitQue-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		0FB6407B0A7630FEA5F98A05 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-VisitQue-VisitQueTests/Pods-VisitQue-VisitQueTests-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-VisitQue-VisitQueTests/Pods-VisitQue-VisitQueTests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-VisitQue-VisitQueTests/Pods-VisitQue-VisitQueTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		1FCCA851D7767392E919F0CC /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-VisitQue/Pods-VisitQue-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-VisitQue/Pods-VisitQue-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-VisitQue/Pods-VisitQue-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		44044717FD0E45347A043D39 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-VisitQue-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6B70324D7E69B7EE660F0AB1 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-VisitQue-VisitQueTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6E8EF2A7B292639BCFC95C37 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-VisitQue-VisitQueTests/Pods-VisitQue-VisitQueTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-VisitQue-VisitQueTests/Pods-VisitQue-VisitQueTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-VisitQue-VisitQueTests/Pods-VisitQue-VisitQueTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -319,8 +476,13 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A055A59B5A40839EE65235C3 /* Pods-VisitQue-VisitQueTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -339,15 +501,22 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VisitQue.app/VisitQue";
 			};
 			name = Debug;
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 37D2B167B90FA28AE962305D /* Pods-VisitQue-VisitQueTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = VisitQueTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -362,12 +531,15 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VisitQue.app/VisitQue";
 			};
 			name = Release;
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E2408C42AE054A1C961ED908 /* Pods-VisitQue.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -393,6 +565,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4E0B3F825CCA5CA16390EA36 /* Pods-VisitQue.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -447,6 +620,7 @@
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 ";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -512,6 +686,7 @@
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 ";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;

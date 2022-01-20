@@ -170,7 +170,7 @@ const Dashboard = ({navigation}) => {
                 text2="Pengunjung"
               />
               <View style={{width: 20}} />
-              <CardQueue count={jmlAntrian} text1="Jumlah" text2="Antrian" />
+              <CardQueue count={jmlAntrian} text1="Antrian" text2="Sekarang" />
             </View>
 
             <View
