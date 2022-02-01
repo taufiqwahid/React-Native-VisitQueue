@@ -1,6 +1,7 @@
 import {getDatabase, onValue, ref} from '@firebase/database';
+import {useFocusEffect} from '@react-navigation/native';
 import {getAuth} from 'firebase/auth';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {
   Dimensions,
   Image,
@@ -17,6 +18,7 @@ import MapView, {Marker} from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
 import {ImageBank, ImageBike, ImageGps} from '../../assets/image';
 import Header from '../../component/Header';
+import {getData} from '../../config/LocalStorage';
 import {apiKeyMaps} from '../../config/Maps';
 import {stylesColors} from '../../utils/stylesColors';
 import {stylesTexts} from '../../utils/stylesTexts';
@@ -26,7 +28,7 @@ const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
-const Location = () => {
+const Location = ({route}) => {
   const GOOGLE_MAPS_APIKEY = apiKeyMaps;
   const [mapView, setMapView] = useState(null);
   const [markerView, setMarkerView] = useState(null);
@@ -59,20 +61,25 @@ const Location = () => {
   const [zoomCount, setZoomCount] = useState(18);
   const db = getDatabase();
   const auth = getAuth();
+  const [selectBank, setSelectBank] = useState('BCA');
+  getData('@selectBank').then(item => setSelectBank(item));
 
-  useEffect(() => {
-    const getLocation = ref(db, '/admin/lokasi');
-    const unsubscribe = onValue(getLocation, snapshot => {
-      console.log('data location', snapshot.val());
-      const data = snapshot.val();
+  useFocusEffect(
+    useCallback(() => {
+      console.log('lokasi', `bank/${selectBank}/lokasi`);
+      const getLocation = ref(db, `bank/${selectBank}/lokasi`);
+      const unsubscribe = onValue(getLocation, snapshot => {
+        console.log('data location', snapshot.val());
+        const data = snapshot.val();
 
-      setCoorBank({
-        latitude: data.latitude,
-        longitude: data.longitude,
+        setCoorBank({
+          latitude: data.latitude,
+          longitude: data.longitude,
+        });
       });
-    });
-    return unsubscribe;
-  }, []);
+      return unsubscribe;
+    }, [selectBank]),
+  );
 
   const counterZoom = type => {
     if (type == 'min') {

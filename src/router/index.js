@@ -137,7 +137,7 @@ const Router = () => {
           }}
         />
 
-        <Tab.Screen
+        {/* <Tab.Screen
           name="Admin"
           component={StackAdmin}
           options={{
@@ -160,7 +160,7 @@ const Router = () => {
                 />
               ),
           }}
-        />
+        /> */}
       </Tab.Navigator>
     );
   };
