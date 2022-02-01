@@ -3,7 +3,6 @@ import {Image, StyleSheet, Text, View} from 'react-native';
 import {ImageIntro1} from '../assets/image';
 import {stylesColors} from '../utils/stylesColors';
 import {stylesTexts} from '../utils/stylesTexts';
-import Button from './Button';
 import TextCount from './TextCount';
 
 const Monitoring = ({
@@ -34,36 +33,28 @@ const Monitoring = ({
           resizeMode="contain"
           style={{width: 150, height: 150}}
         />
-        <TextCount
-          count={data?.antrian?.jumlahSaatIni?.total}
-          text1="Antrian"
-          text2="Sekarang"
-        />
+        <TextCount count={data?.antrian} text1="Antrian" text2="Sekarang" />
       </View>
       <View
         style={{
           justifyContent: 'space-around',
           flexDirection: 'row',
         }}>
+        <TextCount count={data?.pengunjung} text1="Jumlah" text2="Pengunjung" />
         <TextCount
-          count={data?.pengunjung?.jumlahSaatIni?.total}
-          text1="Jumlah"
-          text2="Pengunjung"
-        />
-        <TextCount
-          count={data?.pengunjung?.batas}
+          count={data?.batasPengunjung}
           text1="Batas"
           text2="Pengunjung"
         />
       </View>
       <View style={{height: 30}} />
-      <Button
+      {/* <Button
         disabled={btnDisable}
         type={disabled || sedangMenuju}
         text={sedangMenuju ? 'Ada yang menuju kesana' : 'Sedang menuju kesana?'}
         color={sedangMenuju ? stylesColors.default2 : stylesColors.green}
         onPress={() => handleSedangMenuju()}
-      />
+      /> */}
     </View>
   );
 };

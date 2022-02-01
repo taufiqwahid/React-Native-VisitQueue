@@ -9,6 +9,7 @@ import {
   Text,
   View,
 } from 'react-native';
+import DropDownPicker from 'react-native-dropdown-picker';
 import {showMessage} from 'react-native-flash-message';
 import {Modalize} from 'react-native-modalize';
 import Button from '../../component/Button';
@@ -32,23 +33,35 @@ const Home = ({navigation, route}) => {
   const [encrypPass, setencrypPass] = useState(false);
   const db = getDatabase();
   const auth = getAuth();
+  const [openDDPicker, setOpenDDPicker] = useState(false);
+  const [itemsBank, setItemsBank] = useState([]);
+  const [selectBank, setSelectBank] = useState('BCA');
 
   useEffect(() => {
-    const getAll = ref(db, '/');
-    const unsubscribe = onValue(getAll, snapshot => {
-      setLoading(false);
-      const data = snapshot.val();
-      console.log('Data', data);
-      setDataMonitoring(data);
-      setSedangMenuju(data?.pengunjung?.sedangMenuju);
-      let batasPengunjungMasuk = data?.pengunjung?.jumlahSaatIni.total + 1;
-      setbtnDisable(
-        data?.pengunjung?.sedangMenuju &&
-          batasPengunjungMasuk >= data?.pengunjung?.batas,
-      );
+    const getBank = ref(db, `bank`);
+
+    const getMonitoring = ref(db, `bank/${selectBank}/monitoring`);
+    const unsubscribe = onValue(getBank, snapshot => {
+      const arr = [];
+      snapshot.forEach(data => {
+        arr.push({label: data.key, value: data.key});
+      });
+      setItemsBank(arr);
+      storeData('@selectBank', selectBank);
+      onValue(getMonitoring, snapshot => {
+        setLoading(false);
+        const data = snapshot.val();
+        console.log('monitoring', data);
+        setDataMonitoring(data);
+        setSedangMenuju(data?.pengunjung?.sedangMenuju);
+        let batasPengunjungMasuk = data?.pengunjung + 1;
+        setbtnDisable(
+          data?.sedangMenuju && batasPengunjungMasuk >= data?.batasPengunjung,
+        );
+      });
     });
     return unsubscribe;
-  }, []);
+  }, [selectBank]);
 
   useEffect(() => {
     handleNavigationLogin();
@@ -67,8 +80,7 @@ const Home = ({navigation, route}) => {
   console.log(' route?.name', route?.name);
   useEffect(() => {
     if (
-      dataMonitoring?.pengunjung?.jumlahSaatIni.total <
-        dataMonitoring?.pengunjung?.batas &&
+      dataMonitoring?.pengunjung < dataMonitoring?.batasPengunjung &&
       route?.name == 'Monitoring'
     ) {
       return () => {
@@ -81,7 +93,7 @@ const Home = ({navigation, route}) => {
         );
       };
     }
-  }, [dataMonitoring?.pengunjung?.triggerNotif]);
+  }, [dataMonitoring?.triggerNotif]);
 
   const handleNavigationLogin = () => {
     console.log(route?.params);
@@ -163,7 +175,7 @@ const Home = ({navigation, route}) => {
   };
 
   const handleSedangMenuju = () => {
-    set(ref(db, 'pengunjung/sedangMenuju'), !sedangMenuju)
+    set(ref(db, `bank/${selectBank}/monitoring/sedangMenuju`), !sedangMenuju)
       .then(() => {
         // Data saved successfully!
         console.log('suksess');
@@ -185,6 +197,21 @@ const Home = ({navigation, route}) => {
         </View>
       ) : (
         <View style={{margin: 20}}>
+          <View style={{marginVertical: 20}}>
+            <DropDownPicker
+              placeholder="BCA (Bank Default)"
+              open={openDDPicker}
+              value={selectBank}
+              items={itemsBank}
+              setOpen={setOpenDDPicker}
+              setValue={setSelectBank}
+              setItems={setItemsBank}
+              textStyle={{
+                ...stylesTexts.defaultNormal,
+              }}
+              style={{borderColor: 'white'}}
+            />
+          </View>
           <Monitoring
             btnDisable={btnDisable}
             data={dataMonitoring}
